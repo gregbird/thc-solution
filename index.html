@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Dulra Management Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .sidebar {
+            width: 250px;
+        }
+        .main-content {
+            width: calc(100% - 250px);
+        }
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        /* Simple transition effects */
+        .transition-all {
+            transition: all 0.3s ease-in-out;
+        }
+        .list-item-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            border-left-color: #16a34a; /* green-600 */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="app" class="flex h-screen">
+        <!-- Sidebar -->
+        <aside class="sidebar bg-white shadow-lg flex flex-col p-4 fixed h-full">
+            <div class="text-2xl font-bold text-green-700 flex items-center mb-8">
+                <i class="fas fa-leaf mr-3"></i>
+                <span>Dulra</span>
+            </div>
+            <nav class="flex flex-col space-y-1 flex-grow overflow-y-auto pr-2">
+                <a href="#" id="dashboard-link" class="flex items-center p-3 bg-green-100 text-green-800 rounded-lg font-semibold">
+                    <i class="fas fa-tachometer-alt w-6 text-center"></i>
+                    <span class="ml-4">Dashboard</span>
+                </a>
+                
+                <!-- Year Section -->
+                <div>
+                    <button class="collapsible-btn w-full flex justify-between items-center p-3 text-gray-600 hover:bg-gray-200 rounded-lg text-left">
+                        <div class="flex items-center">
+                            <i class="fas fa-calendar-alt w-6 text-center"></i>
+                            <span class="ml-4 font-semibold">Year</span>
+                        </div>
+                        <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
+                    </button>
+                    <div class="collapsible-content hidden pl-8 mt-1 space-y-1">
+                        <a href="#" class="block p-2 text-sm text-gray-500 hover:bg-gray-100 rounded-md">2026</a>
+                        <a href="#" class="block p-2 text-sm text-gray-500 hover:bg-gray-100 rounded-md">2025</a>
+                        <a href="#" class="block p-2 text-sm text-gray-500 hover:bg-gray-100 rounded-md">2024</a>
+                    </div>
+                </div>
+
+                <!-- Applications Section -->
+                <div>
+                    <button class="collapsible-btn w-full flex justify-between items-center p-3 text-gray-600 hover:bg-gray-200 rounded-lg text-left">
+                        <div class="flex items-center">
+                            <i class="fas fa-folder-plus w-6 text-center"></i>
+                            <span class="ml-4 font-semibold">Applications</span>
+                        </div>
+                        <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
+                    </button>
+                    <div class="collapsible-content hidden pl-8 mt-1 space-y-1">
+                        <a href="#" class="block p-2 text-sm text-gray-500 hover:bg-gray-100 rounded-md">By County</a>
+                        <a href="#" class="block p-2 text-sm text-gray-500 hover:bg-gray-100 rounded-md">By Action</a>
+                    </div>
+                </div>
+
+                <!-- Implementation Section -->
+                <div>
+                    <button class="collapsible-btn w-full flex justify-between items-center p-3 text-gray-600 hover:bg-gray-200 rounded-lg text-left">
+                         <div class="flex items-center">
+                            <i class="fas fa-tasks w-6 text-center"></i>
+                            <span class="ml-4 font-semibold">Implementation</span>
+                        </div>
+                        <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
+                    </button>
+                    <div class="collapsible-content hidden pl-8 mt-1 space-y-1">
+                        <a href="#" class="block p-2 text-sm text-gray-500 hover:bg-gray-100 rounded-md">By County</a>
+                        <a href="#" class="block p-2 text-sm text-gray-500 hover:bg-gray-100 rounded-md">By Action</a>
+                    </div>
+                </div>
+
+                <!-- Surveys Section -->
+                <div>
+                    <button class="collapsible-btn w-full flex justify-between items-center p-3 text-gray-600 hover:bg-gray-200 rounded-lg text-left">
+                         <div class="flex items-center">
+                            <i class="fas fa-poll w-6 text-center"></i>
+                            <span class="ml-4 font-semibold">Surveys</span>
+                        </div>
+                        <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
+                    </button>
+                    <div class="collapsible-content hidden pl-8 mt-1 space-y-1">
+                        <a href="#" class="block p-2 text-sm text-gray-500 hover:bg-gray-100 rounded-md">By County</a>
+                        <a href="#" class="block p-2 text-sm text-gray-500 hover:bg-gray-100 rounded-md">By Action</a>
+                    </div>
+                </div>
+
+                <!-- Assessments Section -->
+                <div>
+                    <button class="collapsible-btn w-full flex justify-between items-center p-3 text-gray-600 hover:bg-gray-200 rounded-lg text-left">
+                        <div class="flex items-center">
+                            <i class="fas fa-clipboard-check w-6 text-center"></i>
+                            <span class="ml-4 font-semibold">Assessments</span>
+                        </div>
+                        <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
+                    </button>
+                    <div class="collapsible-content hidden pl-8 mt-1 space-y-1">
+                        <a href="#" class="block p-2 text-sm text-gray-500 hover:bg-gray-100 rounded-md">By County</a>
+                        <a href="#" class="block p-2 text-sm text-gray-500 hover:bg-gray-100 rounded-md">By Action</a>
+                    </div>
+                </div>
+
+                <!-- Communication Section -->
+                <div>
+                    <button class="collapsible-btn w-full flex justify-between items-center p-3 text-gray-600 hover:bg-gray-200 rounded-lg text-left">
+                        <div class="flex items-center">
+                            <i class="fas fa-bullhorn w-6 text-center"></i>
+                            <span class="ml-4 font-semibold">Communication</span>
+                        </div>
+                        <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
+                    </button>
+                    <div class="collapsible-content hidden pl-8 mt-1 space-y-1">
+                        <a href="#" class="comm-link block p-2 text-sm text-gray-500 hover:bg-gray-100 rounded-md" data-filter="county">By County</a>
+                        <a href="#" class="comm-link block p-2 text-sm text-gray-500 hover:bg-gray-100 rounded-md" data-filter="action">By Action</a>
+                    </div>
+                </div>
+
+                <!-- Team Members Section -->
+                <div>
+                    <button class="collapsible-btn w-full flex justify-between items-center p-3 text-gray-600 hover:bg-gray-200 rounded-lg text-left">
+                        <div class="flex items-center">
+                            <i class="fas fa-users w-6 text-center"></i>
+                            <span class="ml-4 font-semibold">Team Members</span>
+                        </div>
+                        <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
+                    </button>
+                    <div class="collapsible-content hidden pl-8 mt-1 space-y-1">
+                        <a href="#" class="team-link block p-2 text-sm text-gray-500 hover:bg-gray-100 rounded-md" data-filter="county">By County</a>
+                        <a href="#" class="team-link block p-2 text-sm text-gray-500 hover:bg-gray-100 rounded-md" data-filter="action">By Action</a>
+                    </div>
+                </div>
+            </nav>
+            <div class="mt-auto p-4 bg-gray-50 rounded-lg text-center">
+                <p class="text-sm">Welcome, <span class="font-bold">Helen</span>!</p>
+                <p class="text-xs text-gray-500">HC Team Coordinator</p>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content ml-[250px] flex-1 flex flex-col">
+            <!-- Header -->
+            <header class="bg-white/80 backdrop-blur-md shadow-sm p-4 sticky top-0 z-10">
+                <div class="flex justify-between items-center">
+                    <h1 id="page-title" class="text-2xl font-bold text-gray-700"></h1>
+                    <div class="flex items-center space-x-4">
+                        <div class="relative">
+                            <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            <input type="text" id="search-input" placeholder="Search projects..." class="pl-10 pr-4 py-2 border rounded-full w-64 focus:ring-2 focus:ring-green-500 focus:outline-none">
+                        </div>
+                        <button id="add-project-btn" class="bg-green-600 text-white px-4 py-2 rounded-full font-semibold hover:bg-green-700 transition-all shadow-md">
+                            <i class="fas fa-plus mr-2"></i>New Project
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dynamic Content Area -->
+            <div id="content-area" class="p-6 flex-1 overflow-y-auto">
+                <!-- Views will be rendered here by JavaScript -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals (hidden by default) -->
+    <div id="new-project-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <!-- Modal Content -->
+    </div>
+    <div id="assessment-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <!-- Modal Content -->
+    </div>
+    <div id="survey-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <!-- Modal Content -->
+    </div>
+    <div id="communication-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <!-- Modal Content -->
+    </div>
+    <div id="toast-notification" class="fixed top-5 right-5 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg opacity-0 transform -translate-y-10 transition-all duration-300">
+        Message sent successfully!
+    </div>
+
+
+    <script>
+        // --- DATA STORE ---
+        // Mock database for the MVP
+        
+        const teamMembers = [
+            { id: 1, name: 'Peter Jones', role: 'Hydrologist', email: 'peter.jones@dulra.ie', phone: '353871112233', assignments: [ { projectId: 1, status: 'Pending' }, { projectId: 4, status: 'Waiting for Information' }, { projectId: 15, status: 'Completed' }, { projectId: 22, status: 'Pending' } ] },
+            { id: 2, name: 'Maria Garcia', role: 'Ecologist', email: 'maria.garcia@dulra.ie', phone: '353872223344', assignments: [ { projectId: 2, status: 'Completed' }, { projectId: 8, status: 'Pending' }, { projectId: 18, status: 'Completed' } ] },
+            { id: 3, name: 'John Doe', role: 'Assessor', email: 'john.doe@dulra.ie', phone: '353873334455', assignments: [ { projectId: 3, status: 'Completed' }, { projectId: 11, status: 'Waiting for Information' } ] },
+            { id: 4, name: 'Aoife Murphy', role: 'Ecologist', email: 'aoife.murphy@dulra.ie', phone: '353864445566', assignments: [ { projectId: 5, status: 'Pending' }, { projectId: 14, status: 'Pending' } ] },
+            { id: 5, name: 'Cian O\'Kelly', role: 'Hydrologist', email: 'cian.okelly@dulra.ie', phone: '353855556677', assignments: [ { projectId: 6, status: 'Completed' }, { projectId: 25, status: 'Waiting for Information' } ] },
+            { id: 6, name: 'Sinead Walsh', role: 'Assessor', email: 'sinead.walsh@dulra.ie', phone: '353876667788', assignments: [ { projectId: 7, status: 'Pending' }, { projectId: 17, status: 'Completed' } ] },
+            { id: 7, name: 'Eoin Lynch', role: 'Ecologist', email: 'eoin.lynch@dulra.ie', phone: '353877778899', assignments: [ { projectId: 9, status: 'Completed' }, { projectId: 28, status: 'Pending' } ] },
+            { id: 8, name: 'Fionnuala Ryan', role: 'Hydrologist', email: 'fionnuala.ryan@dulra.ie', phone: '353868889900', assignments: [ { projectId: 10, status: 'Waiting for Information' }, { projectId: 31, status: 'Completed' } ] },
+            { id: 9, name: 'Declan Byrne', role: 'Assessor', email: 'declan.byrne@dulra.ie', phone: '353859990011', assignments: [ { projectId: 12, status: 'Pending' }, { projectId: 20, status: 'Completed' } ] },
+            { id: 10, name: 'Roisin Doyle', role: 'Ecologist', email: 'roisin.doyle@dulra.ie', phone: '353870001122', assignments: [ { projectId: 13, status: 'Completed' }, { projectId: 24, status: 'Pending' } ] }
+        ];
+
+        // Helper function to generate realistic project data
+        function generateProjects() {
+            const firstNames = ['Liam', 'Olivia', 'Noah', 'Emma', 'Oliver', 'Ava', 'Elijah', 'Charlotte', 'William', 'Sophia', 'James', 'Amelia', 'Benjamin', 'Isabella', 'Lucas', 'Mia'];
+            const lastNames = ['Murphy', 'Kelly', 'Byrne', 'Ryan', 'O\'Brien', 'Walsh', 'O\'Connor', 'Doyle', 'McCarthy', 'Gallagher', 'Lynch', 'Murray'];
+            const counties = ['Kerry', 'Cork', 'Galway', 'Clare', 'Limerick', 'Tipperary', 'Mayo', 'Donegal'];
+            const actionTypes = ['Wildlife Pond', 'Plan for Nature', 'Mini Woodland'];
+
+            let projectList = [
+                // Keep original diverse-status projects for context
+                 { id: 1, landowner: 'David Miller', county: 'Kerry', eircode: 'V93 AB12', phone: '353871234567', actionType: 'Wildlife Pond', status: 'Implementation', startDate: '2025-08-15', specialist: 'Peter Jones (Hydrologist)', details: 'A 150sqm pond in the lower meadow to enhance local biodiversity and provide a water source for wildlife.', assessments: [], survey: { status: 'Pending', data: null }, activityLog: [{ date: '2025-08-20', activity: 'Hydrologist assigned: Peter Jones' }, { date: '2025-08-15', activity: 'Application approved. Project initiated.' }] },
+                 { id: 2, landowner: 'Sarah Chen', county: 'Cork', eircode: 'T23 CD34', phone: '353872345678', actionType: 'Plan for Nature', status: 'Data Collection', startDate: '2025-07-01', specialist: 'Maria Garcia (Ecologist)', details: 'A comprehensive ecological plan covering 10 acres of mixed woodland and grassland.', assessments: [{ assessor: 'Maria Garcia', date: '2025-09-10', notes: 'Site visit complete. Excellent potential for native species reintroduction. Soil samples taken.', photos: 2, location: '52.05, -9.51' }], survey: { status: 'Pending', data: null }, activityLog: [{ date: '2025-09-10', activity: 'On-site assessment completed by Maria Garcia.' }, { date: '2025-07-05', activity: 'Ecologist created 10-page plan and delivered to landowner.' }, { date: '2025-07-01', activity: 'Project initiated.' }] },
+                 { id: 3, landowner: 'Tom O\'Sullivan', county: 'Limerick', eircode: 'V94 EF56', phone: '353873456789', actionType: 'Mini Woodland', status: 'Complete', startDate: '2025-04-10', specialist: 'HC Team', details: 'Planting of 300 native Irish trees (oak, birch, rowan) on a 1-acre plot.', assessments: [{ assessor: 'John Doe', date: '2025-09-18', notes: 'Post-action assessment shows 95% tree survival rate. Good growth observed.', photos: 5, location: '52.14, -9.52' }], survey: { status: 'Complete', data: { satisfaction: 5, feedback: 'The process was smooth and the advice was very helpful!' } }, activityLog: [{ date: '2025-09-20', activity: 'Participant survey completed.' }, { date: '2025-09-18', activity: 'On-site assessment completed by John Doe.' }, { date: '2025-04-22', activity: 'Landowner planted trees.' }, { date: '2025-04-10', activity: 'Project initiated.' }] },
+                 { id: 4, landowner: 'Grace Kelly', county: 'Clare', eircode: 'V95 GH78', phone: '353874567890', actionType: 'Wildlife Pond', status: 'Application Review', startDate: '2025-09-21', specialist: 'N/A', details: 'Proposal for a small pond near an existing stream.', assessments: [], survey: { status: 'Not Sent', data: null }, activityLog: [{ date: '2025-09-21', activity: 'Landowner submitted application.' }] }
+            ];
+
+            const eircodePrefixes = {
+                'Kerry': 'V93', 'Cork': 'T23', 'Galway': 'H91', 'Clare': 'V95', 'Limerick': 'V94', 'Tipperary': 'E41', 'Mayo': 'F23', 'Donegal': 'F92'
+            };
+            const chars = 'ABCDEFHKNPRSTVWXYZ123456789';
+
+            for (let i = 5; i <= 34; i++) {
+                const fName = firstNames[Math.floor(Math.random() * firstNames.length)];
+                const lName = lastNames[Math.floor(Math.random() * lastNames.length)];
+                const county = counties[Math.floor(Math.random() * counties.length)];
+                const action = actionTypes[Math.floor(Math.random() * actionTypes.length)];
+                const month = Math.floor(Math.random() * 8) + 1; // Jan to Aug
+                
+                let randomEircode = eircodePrefixes[county] + ' ';
+                for(let j=0; j<4; j++) randomEircode += chars.charAt(Math.floor(Math.random() * chars.length));
+
+                projectList.push({
+                    id: i,
+                    landowner: `${fName} ${lName}`,
+                    county: county,
+                    eircode: randomEircode,
+                    phone: `35386${Math.floor(1000000 + Math.random() * 9000000)}`,
+                    actionType: action,
+                    status: 'Implementation',
+                    startDate: `2025-0${month}-${Math.floor(Math.random() * 28) + 1}`,
+                    specialist: action === 'Wildlife Pond' ? 'Peter Jones (Hydrologist)' : (action === 'Plan for Nature' ? 'Maria Garcia (Ecologist)' : 'HC Team'),
+                    details: `Project in implementation phase for a ${action.toLowerCase()}.`,
+                    assessments: [],
+                    survey: { status: 'Not Sent', data: null },
+                    activityLog: [
+                         { date: `2025-0${month}-01`, activity: 'Application approved. Project initiated.' }
+                    ]
+                });
+            }
+            return projectList;
+        }
+
+        let projects = generateProjects();
+        
+
+        // --- GLOBAL STATE ---
+        const state = {
+            currentView: 'dashboard', // 'dashboard', 'projectDetail', 'team'
+            currentProjectId: null,
+            currentTeamMemberId: null,
+            filterText: '',
+        };
+
+        // --- DOM ELEMENTS ---
+        const contentArea = document.getElementById('content-area');
+        const pageTitle = document.getElementById('page-title');
+        const searchInput = document.getElementById('search-input');
+        const dashboardLink = document.getElementById('dashboard-link');
+        const addProjectBtn = document.getElementById('add-project-btn');
+
+        // --- STATUS STYLES MAPPING ---
+        const statusStyles = {
+            'Application Review': 'bg-yellow-100 text-yellow-800',
+            'Implementation': 'bg-blue-100 text-blue-800',
+            'Data Collection': 'bg-purple-100 text-purple-800',
+            'Complete': 'bg-green-100 text-green-800',
+        };
+
+        const assignmentStatusStyles = {
+            'Waiting for Information': 'bg-yellow-100 text-yellow-800',
+            'Pending': 'bg-blue-100 text-blue-800',
+            'Completed': 'bg-green-100 text-green-800',
+        };
+
+        const iconMap = {
+            'Wildlife Pond': 'fas fa-water',
+            'Plan for Nature': 'fas fa-feather-alt',
+            'Mini Woodland': 'fas fa-tree',
+        };
+
+        // --- RENDER FUNCTIONS ---
+        
+        /**
+         * Renders the main dashboard view with project cards.
+         */
+        function renderDashboard() {
+            state.currentView = 'dashboard';
+            state.currentProjectId = null;
+            state.currentTeamMemberId = null;
+            pageTitle.textContent = 'Projects Dashboard';
+            addProjectBtn.classList.remove('hidden');
+
+            const filteredProjects = projects.filter(p => 
+                p.landowner.toLowerCase().includes(state.filterText.toLowerCase()) ||
+                p.actionType.toLowerCase().includes(state.filterText.toLowerCase()) ||
+                p.county.toLowerCase().includes(state.filterText.toLowerCase())
+            );
+
+            if (filteredProjects.length === 0) {
+                contentArea.innerHTML = `<div class="text-center py-16"><i class="fas fa-folder-open fa-3x text-gray-400 mb-4"></i><h2 class="text-xl font-semibold text-gray-600">No projects found.</h2><p class="text-gray-500">Try adjusting your search or add a new project.</p></div>`;
+                return;
+            }
+
+            const projectListHeader = `
+                <div class="px-4 py-2 bg-gray-50 grid grid-cols-10 gap-4 text-xs font-bold text-gray-500 uppercase rounded-t-lg">
+                    <div class="col-span-3">Landowner</div>
+                    <div class="col-span-2">County</div>
+                    <div class="col-span-3">Action Type</div>
+                    <div class="col-span-2">Status</div>
+                </div>
+            `;
+
+            const projectListItems = filteredProjects.map(p => `
+                <div class="list-item-card bg-white px-4 py-3 grid grid-cols-10 gap-4 items-center border-b border-l-4 border-transparent cursor-pointer transition-all" onclick="navigateToProject(${p.id})">
+                    <div class="col-span-3 font-semibold text-gray-800">${p.landowner}</div>
+                    <div class="col-span-2 text-sm text-gray-600">${p.county}</div>
+                    <div class="col-span-3 text-sm text-gray-600 flex items-center">
+                        <i class="${iconMap[p.actionType] || 'fas fa-leaf'} mr-3 text-gray-400 w-4 text-center"></i>
+                        ${p.actionType}
+                    </div>
+                    <div class="col-span-2">
+                        <span class="text-xs font-semibold px-3 py-1 rounded-full ${statusStyles[p.status] || 'bg-gray-100 text-gray-800'}">${p.status}</span>
+                    </div>
+                </div>
+            `).join('');
+
+            contentArea.innerHTML = `
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                    ${projectListHeader}
+                    <div class="max-h-[75vh] overflow-y-auto">
+                        ${projectListItems}
+                    </div>
+                </div>`;
+        }
+
+        /**
+         * Renders the detailed view for a single project.
+         */
+        function renderProjectDetail(projectId) {
+            state.currentView = 'projectDetail';
+            state.currentProjectId = projectId;
+            state.currentTeamMemberId = null;
+            addProjectBtn.classList.add('hidden');
+
+            const project = projects.find(p => p.id === projectId);
+            if (!project) {
+                renderDashboard(); // Fallback if project not found
+                return;
+            }
+
+            pageTitle.textContent = `Project: ${project.landowner}`;
+
+            // --- Render functions for sub-components ---
+
+            const renderOverview = () => `
+                <div class="bg-white p-6 rounded-lg shadow-sm border">
+                    <h3 class="font-bold text-lg mb-4">Project Overview</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
+                        <div><strong class="text-gray-500 block">Landowner:</strong> ${project.landowner}</div>
+                        <div><strong class="text-gray-500 block">County:</strong> ${project.county}</div>
+                        <div><strong class="text-gray-500 block">Eircode:</strong> ${project.eircode}</div>
+                        <div><strong class="text-gray-500 block">Action Type:</strong> ${project.actionType}</div>
+                        <div><strong class="text-gray-500 block">Start Date:</strong> ${project.startDate}</div>
+                        <div><strong class="text-gray-500 block">Assigned Specialist:</strong> ${project.specialist}</div>
+                        <div class="lg:col-span-3"><strong class="text-gray-500 block">Details:</strong> ${project.details}</div>
+                    </div>
+                </div>
+            `;
+
+             const renderActions = () => {
+                const reportAttachment = project.actionType === 'Wildlife Pond' ? `
+                    <div class="bg-white p-6 rounded-lg shadow-sm border">
+                        <h3 class="font-bold text-lg mb-4">Attached Documents</h3>
+                        <a href="#" class="flex items-center p-3 bg-gray-50 rounded-md hover:bg-gray-100">
+                            <i class="fas fa-file-pdf text-red-500 text-xl mr-3"></i>
+                            <div>
+                                <p class="font-semibold">Hydrologist_Report.pdf</p>
+                                <p class="text-xs text-gray-500">1.2 MB - Uploaded 2025-08-20</p>
+                            </div>
+                        </a>
+                    </div>
+                ` : '';
+
+                return `
+                    <div class="space-y-6">
+                         <div class="bg-white p-6 rounded-lg shadow-sm border">
+                            <h3 class="font-bold text-lg mb-4">Communication</h3>
+                            <button onclick="window.open('https://wa.me/${project.phone}', '_blank')" class="w-full bg-green-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-green-600 transition-all flex items-center justify-center">
+                                <i class="fab fa-whatsapp text-xl mr-3"></i> Message Landowner via WhatsApp
+                            </button>
+                        </div>
+                        ${reportAttachment}
+                    </div>
+                   `;
+            };
+
+            const renderAssessments = () => {
+                const assessmentItems = project.assessments.length > 0 ? project.assessments.map(a => `
+                    <div class="border-b last:border-b-0 py-3">
+                        <div class="flex justify-between items-center">
+                            <p class="font-semibold">${a.assessor}</p>
+                            <p class="text-sm text-gray-500">${a.date}</p>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-1">${a.notes}</p>
+                        <div class="text-xs text-gray-500 mt-2">
+                            <i class="fas fa-camera mr-1"></i> ${a.photos} photos | <i class="fas fa-map-marker-alt ml-3 mr-1"></i> ${a.location}
+                        </div>
+                    </div>`).join('') : '<p class="text-sm text-gray-500 py-4 text-center">No assessments recorded yet.</p>';
+                
+                return `
+                    <div class="bg-white p-6 rounded-lg shadow-sm border">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-bold text-lg">On-Site Assessments</h3>
+                            <button class="bg-blue-500 text-white px-3 py-1 text-sm rounded-md font-semibold hover:bg-blue-600" onclick="openAssessmentModal()">
+                                <i class="fas fa-plus mr-1"></i> Add Assessment
+                            </button>
+                        </div>
+                        <div class="max-h-60 overflow-y-auto pr-2">${assessmentItems}</div>
+                    </div>`;
+            };
+
+            const renderSurvey = () => {
+                let surveyContent = '';
+                if (project.survey.status === 'Complete') {
+                    surveyContent = `<div class="bg-green-50 p-4 rounded-md">
+                        <p class="font-semibold text-green-800">Survey Completed</p>
+                        <p class="text-sm mt-1"><strong>Satisfaction:</strong> ${'⭐'.repeat(project.survey.data.satisfaction)}</p>
+                        <p class="text-sm mt-1"><strong>Feedback:</strong> "${project.survey.data.feedback}"</p>
+                    </div>`;
+                } else if (project.survey.status === 'Pending') {
+                     surveyContent = `<div class="flex items-center justify-between">
+                        <p class="text-sm text-yellow-700">Survey sent to landowner. Awaiting response.</p>
+                        <button class="text-sm text-blue-600 hover:underline" onclick="openSurveyModal(true)">Simulate Completion</button>
+                     </div>`;
+                } else {
+                    surveyContent = `<div class="flex items-center justify-between">
+                        <p class="text-sm text-gray-600">Participant survey has not been sent yet.</p>
+                        <button class="bg-gray-200 text-gray-800 px-3 py-1 text-sm rounded-md font-semibold hover:bg-gray-300" onclick="sendSurvey(${project.id})">
+                            <i class="fas fa-paper-plane mr-2"></i>Send Survey
+                        </button>
+                    </div>`;
+                }
+                return `<div class="bg-white p-6 rounded-lg shadow-sm border">
+                    <h3 class="font-bold text-lg mb-4">Participant Survey</h3>
+                    ${surveyContent}
+                </div>`;
+            };
+
+            const renderActivityLog = () => {
+                const logItems = project.activityLog.map(log => `
+                    <div class="flex items-start py-2">
+                        <div class="w-2 h-2 bg-gray-300 rounded-full mt-1.5 mr-3"></div>
+                        <div>
+                            <p class="text-sm">${log.activity}</p>
+                            <p class="text-xs text-gray-400">${log.date}</p>
+                        </div>
+                    </div>`).join('');
+                return `
+                    <div class="bg-white p-6 rounded-lg shadow-sm border">
+                        <h3 class="font-bold text-lg mb-2">Activity Log</h3>
+                        <div class="max-h-96 overflow-y-auto pr-2">${logItems}</div>
+                    </div>`;
+            };
+
+            contentArea.innerHTML = `
+                <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+                    <div class="xl:col-span-2 space-y-6">
+                        ${renderOverview()}
+                        ${renderAssessments()}
+                        ${renderSurvey()}
+                    </div>
+                    <div class="space-y-6">
+                        ${renderActions()}
+                        ${renderActivityLog()}
+                    </div>
+                </div>
+            `;
+        }
+
+        /**
+         * Renders the team members list view.
+         */
+        function renderTeamMembers() {
+            state.currentView = 'team';
+            state.currentProjectId = null;
+            state.currentTeamMemberId = null;
+            pageTitle.textContent = 'Team Members';
+            addProjectBtn.classList.add('hidden');
+
+            const teamListItems = teamMembers.map(member => `
+                <div class="list-item-card bg-white px-4 py-3 grid grid-cols-10 gap-4 items-center border-b border-l-4 border-transparent cursor-pointer transition-all" onclick="renderTeamMemberDetail(${member.id})">
+                    <div class="col-span-3 font-semibold text-gray-800">${member.name}</div>
+                    <div class="col-span-2 text-sm text-gray-600">${member.role}</div>
+                    <div class="col-span-3 text-sm text-gray-600">${member.email}</div>
+                    <div class="col-span-2 text-sm text-gray-600">${member.phone}</div>
+                </div>
+            `).join('');
+
+            const teamListHeader = `
+                <div class="px-4 py-2 bg-gray-50 grid grid-cols-10 gap-4 text-xs font-bold text-gray-500 uppercase rounded-t-lg">
+                    <div class="col-span-3">Name</div>
+                    <div class="col-span-2">Role</div>
+                    <div class="col-span-3">Email</div>
+                    <div class="col-span-2">Phone</div>
+                </div>
+            `;
+
+            contentArea.innerHTML = `
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                    ${teamListHeader}
+                    <div class="max-h-[75vh] overflow-y-auto">
+                        ${teamListItems}
+                    </div>
+                </div>`;
+        }
+
+        /**
+         * Renders the detailed view for a single team member.
+         */
+        function renderTeamMemberDetail(memberId) {
+            state.currentView = 'teamDetail';
+            state.currentTeamMemberId = memberId;
+            state.currentProjectId = null;
+            addProjectBtn.classList.add('hidden');
+
+            const member = teamMembers.find(m => m.id === memberId);
+            pageTitle.textContent = `Team Member: ${member.name}`;
+
+            const assignmentItems = member.assignments.map(assign => {
+                const project = projects.find(p => p.id === assign.projectId);
+                return `
+                    <div class="list-item-card bg-white px-4 py-3 grid grid-cols-10 gap-4 items-center border-b border-l-4 border-transparent cursor-pointer transition-all" onclick="navigateToProject(${project.id})">
+                        <div class="col-span-3 font-semibold text-gray-800">${project.landowner}</div>
+                        <div class="col-span-2 text-sm text-gray-600">${project.county}</div>
+                        <div class="col-span-3 text-sm text-gray-600">${project.actionType}</div>
+                        <div class="col-span-2">
+                             <span class="text-xs font-semibold px-3 py-1 rounded-full ${assignmentStatusStyles[assign.status] || 'bg-gray-100 text-gray-800'}">${assign.status}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            const assignmentHeader = `
+                 <div class="px-4 py-2 bg-gray-50 grid grid-cols-10 gap-4 text-xs font-bold text-gray-500 uppercase rounded-t-lg">
+                    <div class="col-span-3">Assigned Landowner</div>
+                    <div class="col-span-2">County</div>
+                    <div class="col-span-3">Action Type</div>
+                    <div class="col-span-2">Assignment Status</div>
+                </div>
+            `;
+
+            contentArea.innerHTML = `
+                <div class="bg-white p-6 rounded-lg shadow-sm border mb-6">
+                    <h3 class="font-bold text-lg mb-4">Contact Information</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                        <div><strong class="text-gray-500 block">Name:</strong> ${member.name}</div>
+                        <div><strong class="text-gray-500 block">Role:</strong> ${member.role}</div>
+                        <div><strong class="text-gray-500 block">Email:</strong> <a href="mailto:${member.email}" class="text-green-600 hover:underline">${member.email}</a></div>
+                        <div><strong class="text-gray-500 block">Phone:</strong> ${member.phone}</div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                    <h3 class="font-bold text-lg p-4 border-b">Assigned Projects</h3>
+                    ${assignmentHeader}
+                    <div class="max-h-[60vh] overflow-y-auto">
+                        ${assignmentItems}
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- MODAL FUNCTIONS ---
+
+        function openCommunicationModal(filterType) {
+            const modal = document.getElementById('communication-modal');
+            
+            let options = [];
+            let filterLabel = '';
+            if (filterType === 'county') {
+                filterLabel = 'County';
+                const counties = [...new Set(projects.map(p => p.county))];
+                options = counties.map(c => `<option value="${c}">${c}</option>`);
+            } else {
+                filterLabel = 'Action Type';
+                const actionTypes = [...new Set(projects.map(p => p.actionType))];
+                options = actionTypes.map(a => `<option value="${a}">${a}</option>`);
+            }
+
+            modal.innerHTML = `
+                <div class="bg-white rounded-lg shadow-2xl w-full max-w-2xl p-8 m-4">
+                    <h2 class="text-2xl font-bold mb-6">Bulk Communication</h2>
+                    <form id="communication-form">
+                        <div class="grid grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Channel</label>
+                                <div class="flex rounded-md shadow-sm">
+                                    <button type="button" id="comm-channel-email" class="channel-btn relative inline-flex items-center px-4 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500 bg-green-100 border-green-500 text-green-700">
+                                        <i class="fas fa-envelope mr-2"></i> Email
+                                    </button>
+                                    <button type="button" id="comm-channel-whatsapp" class="channel-btn -ml-px relative inline-flex items-center px-4 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500">
+                                        <i class="fab fa-whatsapp mr-2"></i> WhatsApp
+                                    </button>
+                                </div>
+                            </div>
+                             <div>
+                                <label for="comm-filter" class="block text-sm font-medium text-gray-700">Target Landowners By ${filterLabel}</label>
+                                <select id="comm-filter" class="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500">
+                                    <option value="all">All ${filterLabel}s</option>
+                                    ${options.join('')}
+                                </select>
+                             </div>
+                        </div>
+                        <div class="mt-6">
+                             <label for="comm-message" class="block text-sm font-medium text-gray-700">Message</label>
+                             <textarea id="comm-message" rows="6" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" placeholder="Dear Landowner..."></textarea>
+                        </div>
+
+                        <div class="flex justify-end space-x-3 mt-8">
+                            <button type="button" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300" onclick="closeModal('communication-modal')">Cancel</button>
+                            <button type="submit" class="px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 font-semibold">Send Message</button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            modal.classList.add('flex');
+            modal.classList.remove('hidden');
+
+            // Add event listeners for the channel switcher
+            const emailBtn = modal.querySelector('#comm-channel-email');
+            const whatsappBtn = modal.querySelector('#comm-channel-whatsapp');
+            emailBtn.addEventListener('click', () => {
+                emailBtn.classList.add('bg-green-100', 'border-green-500', 'text-green-700');
+                whatsappBtn.classList.remove('bg-green-100', 'border-green-500', 'text-green-700');
+            });
+            whatsappBtn.addEventListener('click', () => {
+                whatsappBtn.classList.add('bg-green-100', 'border-green-500', 'text-green-700');
+                emailBtn.classList.remove('bg-green-100', 'border-green-500', 'text-green-700');
+            });
+
+            document.getElementById('communication-form').onsubmit = handleSendMessage;
+        }
+
+        function openNewProjectModal() {
+            const modal = document.getElementById('new-project-modal');
+            modal.innerHTML = `
+                <div class="bg-white rounded-lg shadow-2xl w-full max-w-lg p-8 m-4">
+                    <h2 class="text-2xl font-bold mb-6">Create New Project</h2>
+                    <form id="new-project-form">
+                        <div class="mb-4">
+                            <label for="landowner" class="block text-sm font-medium text-gray-700">Landowner Name</label>
+                            <input type="text" id="landowner" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500">
+                        </div>
+                         <div class="grid grid-cols-2 gap-4">
+                            <div class="mb-4">
+                                <label for="county" class="block text-sm font-medium text-gray-700">County</label>
+                                <input type="text" id="county" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500">
+                            </div>
+                            <div class="mb-4">
+                                <label for="eircode" class="block text-sm font-medium text-gray-700">Eircode</label>
+                                <input type="text" id="eircode" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" placeholder="A12 B3C4">
+                            </div>
+                        </div>
+                         <div class="mb-4">
+                            <label for="actionType" class="block text-sm font-medium text-gray-700">Action Type</label>
+                            <select id="actionType" required class="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500">
+                                <option>Wildlife Pond</option>
+                                <option>Plan for Nature</option>
+                                <option>Mini Woodland</option>
+                            </select>
+                        </div>
+                        <div class="mb-6">
+                            <label for="details" class="block text-sm font-medium text-gray-700">Project Details</label>
+                            <textarea id="details" rows="3" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"></textarea>
+                        </div>
+                        <div class="flex justify-end space-x-3">
+                            <button type="button" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300" onclick="closeModal('new-project-modal')">Cancel</button>
+                            <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">Create Project</button>
+                        </div>
+                    </form>
+                </div>`;
+            modal.classList.add('flex');
+            modal.classList.remove('hidden');
+            document.getElementById('new-project-form').onsubmit = handleAddProject;
+        }
+
+        function openAssessmentModal() {
+            const modal = document.getElementById('assessment-modal');
+            modal.innerHTML = `
+                <div class="bg-white rounded-lg shadow-2xl w-full max-w-lg p-8 m-4">
+                    <h2 class="text-2xl font-bold mb-6">Add On-Site Assessment</h2>
+                    <form id="assessment-form">
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label for="assessor" class="block text-sm font-medium text-gray-700">Assessor</label>
+                                <input type="text" id="assessor" required value="Maria Garcia" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md">
+                            </div>
+                            <div>
+                                <label for="assessment-date" class="block text-sm font-medium text-gray-700">Date</label>
+                                <input type="date" id="assessment-date" required value="${new Date().toISOString().slice(0,10)}" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md">
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="notes" class="block text-sm font-medium text-gray-700">Notes</label>
+                            <textarea id="notes" rows="4" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"></textarea>
+                        </div>
+                        <div class="mb-6 flex items-center justify-between p-3 bg-gray-50 rounded-md">
+                             <label for="photos" class="text-sm font-medium text-gray-700">Attach Photos</label>
+                             <input type="file" id="photos" multiple class="text-sm text-gray-500 file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                        </div>
+                        <div class="flex justify-end space-x-3">
+                            <button type="button" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300" onclick="closeModal('assessment-modal')">Cancel</button>
+                            <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Submit Assessment</button>
+                        </div>
+                    </form>
+                </div>`;
+            modal.classList.add('flex');
+            modal.classList.remove('hidden');
+            document.getElementById('assessment-form').onsubmit = handleAddAssessment;
+        }
+        
+        function openSurveyModal(isCompletion = false) {
+             const project = projects.find(p => p.id === state.currentProjectId);
+             const modal = document.getElementById('survey-modal');
+             modal.innerHTML = `
+                <div class="bg-white rounded-lg shadow-2xl w-full max-w-xl p-8 m-4">
+                    <h2 class="text-2xl font-bold mb-2">Participant Survey</h2>
+                    <p class="text-sm text-gray-500 mb-6">This form simulates the experience for landowner ${project.landowner}.</p>
+                    <form id="survey-form">
+                        <div class="mb-4">
+                            <p class="block text-sm font-medium text-gray-700 mb-2">Overall, how satisfied are you with the program?</p>
+                            <div class="flex space-x-2 text-3xl cursor-pointer" id="satisfaction-rating">
+                                <i class="far fa-star text-gray-300" data-value="1"></i>
+                                <i class="far fa-star text-gray-300" data-value="2"></i>
+                                <i class="far fa-star text-gray-300" data-value="3"></i>
+                                <i class="far fa-star text-gray-300" data-value="4"></i>
+                                <i class="far fa-star text-gray-300" data-value="5"></i>
+                            </div>
+                            <input type="hidden" id="satisfaction" required>
+                        </div>
+                         <div class="mb-6">
+                            <label for="feedback" class="block text-sm font-medium text-gray-700">Do you have any feedback to help us improve?</label>
+                            <textarea id="feedback" rows="4" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"></textarea>
+                        </div>
+                        <div class="flex justify-end space-x-3">
+                            <button type="button" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300" onclick="closeModal('survey-modal')">Close</button>
+                            <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">Submit Survey</button>
+                        </div>
+                    </form>
+                </div>`;
+            modal.classList.add('flex');
+            modal.classList.remove('hidden');
+
+            const stars = modal.querySelectorAll('#satisfaction-rating i');
+            stars.forEach(star => {
+                star.addEventListener('click', (e) => {
+                    const rating = e.target.dataset.value;
+                    document.getElementById('satisfaction').value = rating;
+                    stars.forEach(s => {
+                        s.classList.toggle('fas', s.dataset.value <= rating);
+                        s.classList.toggle('text-yellow-400', s.dataset.value <= rating);
+                        s.classList.toggle('far', s.dataset.value > rating);
+                        s.classList.toggle('text-gray-300', s.dataset.value > rating);
+                    });
+                });
+            });
+            document.getElementById('survey-form').onsubmit = handleAddSurvey;
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+            document.getElementById(modalId).classList.remove('flex');
+        }
+
+        function showToast() {
+            const toast = document.getElementById('toast-notification');
+            toast.classList.remove('opacity-0', '-translate-y-10');
+            toast.classList.add('opacity-100', 'translate-y-0');
+            setTimeout(() => {
+                toast.classList.remove('opacity-100', 'translate-y-0');
+                toast.classList.add('opacity-0', '-translate-y-10');
+            }, 3000);
+        }
+
+        // --- HANDLER FUNCTIONS ---
+        function handleSendMessage(e) {
+            e.preventDefault();
+            // In a real app, this would trigger a backend process
+            console.log('Sending message:', {
+                filter: document.getElementById('comm-filter').value,
+                message: document.getElementById('comm-message').value,
+            });
+            closeModal('communication-modal');
+            showToast();
+        }
+
+        function handleAddProject(e) {
+            e.preventDefault();
+            const newProject = {
+                id: projects.length + 1,
+                landowner: document.getElementById('landowner').value,
+                county: document.getElementById('county').value,
+                eircode: document.getElementById('eircode').value.toUpperCase(),
+                phone: `35387${Math.floor(1000000 + Math.random() * 9000000)}`,
+                actionType: document.getElementById('actionType').value,
+                status: 'Application Review',
+                startDate: new Date().toISOString().slice(0,10),
+                specialist: 'N/A',
+                details: document.getElementById('details').value,
+                assessments: [],
+                survey: { status: 'Not Sent', data: null },
+                activityLog: [
+                    { date: new Date().toISOString().slice(0,10), activity: 'Landowner submitted application.' }
+                ]
+            };
+            projects.unshift(newProject);
+            closeModal('new-project-modal');
+            renderDashboard();
+        }
+
+        function handleAddAssessment(e) {
+             e.preventDefault();
+             const project = projects.find(p => p.id === state.currentProjectId);
+             const newAssessment = {
+                assessor: document.getElementById('assessor').value,
+                date: document.getElementById('assessment-date').value,
+                notes: document.getElementById('notes').value,
+                photos: document.getElementById('photos').files.length,
+                location: '52.14, -9.52' // Mock location
+             };
+             project.assessments.unshift(newAssessment);
+             logActivity(project.id, `On-site assessment completed by ${newAssessment.assessor}.`);
+             closeModal('assessment-modal');
+             renderProjectDetail(project.id);
+        }
+        
+        function handleAddSurvey(e) {
+            e.preventDefault();
+            const project = projects.find(p => p.id === state.currentProjectId);
+            project.survey.status = 'Complete';
+            project.survey.data = {
+                satisfaction: parseInt(document.getElementById('satisfaction').value),
+                feedback: document.getElementById('feedback').value,
+            };
+            logActivity(project.id, 'Participant survey completed.');
+            if(project.status === 'Data Collection'){
+                 project.status = 'Complete';
+            }
+            closeModal('survey-modal');
+            renderProjectDetail(project.id);
+        }
+
+        function sendSurvey(projectId) {
+            const project = projects.find(p => p.id === projectId);
+            project.survey.status = 'Pending';
+            logActivity(projectId, 'Participant survey sent to landowner.');
+            renderProjectDetail(projectId);
+        }
+        
+        function logActivity(projectId, activity) {
+            const project = projects.find(p => p.id === projectId);
+            project.activityLog.unshift({
+                date: new Date().toISOString().slice(0,10),
+                activity: activity,
+            });
+        }
+        
+        function navigateToProject(projectId) {
+            renderProjectDetail(projectId);
+        }
+
+        function navigateToDashboard() {
+            renderDashboard();
+        }
+
+        // --- EVENT LISTENERS ---
+        dashboardLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            navigateToDashboard();
+        });
+        
+        addProjectBtn.addEventListener('click', openNewProjectModal);
+
+        searchInput.addEventListener('keyup', (e) => {
+            state.filterText = e.target.value;
+            if (state.currentView === 'dashboard') {
+                renderDashboard();
+            }
+        });
+
+        // Communication sidebar links
+        document.querySelectorAll('.comm-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const filterType = e.target.dataset.filter;
+                openCommunicationModal(filterType);
+            });
+        });
+
+        // Team Members sidebar links
+        document.querySelectorAll('.team-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                // For now, both links go to the main team page. Filtering can be added later.
+                renderTeamMembers();
+            });
+        });
+
+        // Sidebar collapsible sections
+        document.querySelectorAll('.collapsible-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                const icon = button.querySelector('i.fa-chevron-down');
+
+                if (content.classList.contains('hidden')) {
+                    content.classList.remove('hidden');
+                    icon.classList.add('rotate-180');
+                } else {
+                    content.classList.add('hidden');
+                    icon.classList.remove('rotate-180');
+                }
+            });
+        });
+
+        // Close modals with Escape key
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal('new-project-modal');
+                closeModal('assessment-modal');
+                closeModal('survey-modal');
+                closeModal('communication-modal');
+            }
+        });
+
+        // --- INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', () => {
+            renderDashboard();
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
