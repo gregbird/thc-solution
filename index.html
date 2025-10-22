@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Dulra Ecological & Nature Management Platform</title>
+    <title>Project Dulra Management Platform</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
-            font-family: 'Inter', poppins;
+            font-family: 'Inter', sans-serif;
         }
         .sidebar {
             width: 250px;
@@ -25,7 +25,7 @@
             background: #f1f1f1;
         }
         ::-webkit-scrollbar-thumb {
-            background: #A4C8FD;
+            background: #888;
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
@@ -47,14 +47,18 @@
     <div id="app" class="flex h-screen">
         <!-- Sidebar -->
         <aside class="sidebar bg-white shadow-lg flex flex-col p-4 fixed h-full">
-            <div class="text-2xl font-bold text-blue-400 flex items-center mb-8">
+            <div class="text-2xl font-bold text-green-700 flex items-center mb-8">
                 <i class="fas fa-leaf mr-3"></i>
                 <span>Dulra</span>
             </div>
             <nav class="flex flex-col space-y-1 flex-grow overflow-y-auto pr-2">
-                <a href="#" id="dashboard-link" class="flex items-center p-3 bg-green-100 text-blue-400 rounded-lg font-semibold">
+                <a href="#" id="home-link" class="flex items-center p-3 bg-green-100 text-green-800 rounded-lg font-semibold">
+                    <i class="fas fa-home w-6 text-center"></i>
+                    <span class="ml-4">Home</span>
+                </a>
+                <a href="#" id="dashboard-link" class="flex items-center p-3 text-gray-600 hover:bg-gray-200 rounded-lg">
                     <i class="fas fa-tachometer-alt w-6 text-center"></i>
-                    <span class="ml-4">Dashboard</span>
+                    <span class="ml-4 font-semibold">Dashboard</span>
                 </a>
                 
                 <!-- Year Section -->
@@ -93,7 +97,7 @@
                     <button class="collapsible-btn w-full flex justify-between items-center p-3 text-gray-600 hover:bg-gray-200 rounded-lg text-left">
                          <div class="flex items-center">
                             <i class="fas fa-tasks w-6 text-center"></i>
-                            <span class="ml-4 font-semibold">Actions</span>
+                            <span class="ml-4 font-semibold">Implementation</span>
                         </div>
                         <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
                     </button>
@@ -104,19 +108,12 @@
                 </div>
 
                 <!-- Surveys Section -->
-                <div>
-                    <button class="collapsible-btn w-full flex justify-between items-center p-3 text-gray-600 hover:bg-gray-200 rounded-lg text-left">
-                         <div class="flex items-center">
-                            <i class="fas fa-poll w-6 text-center"></i>
-                            <span class="ml-4 font-semibold">Surveys</span>
-                        </div>
-                        <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
-                    </button>
-                    <div class="collapsible-content hidden pl-8 mt-1 space-y-1">
-                        <a href="#" class="block p-2 text-sm text-gray-500 hover:bg-gray-100 rounded-md">By County</a>
-                        <a href="#" class="block p-2 text-sm text-gray-500 hover:bg-gray-100 rounded-md">By Action</a>
+                <a href="#" id="surveys-link" class="flex items-center p-3 text-gray-600 hover:bg-gray-200 rounded-lg text-left">
+                    <div class="flex items-center">
+                        <i class="fas fa-poll w-6 text-center"></i>
+                        <span class="ml-4 font-semibold">Surveys</span>
                     </div>
-                </div>
+                </a>
 
                 <!-- Assessments Section -->
                 <div>
@@ -253,6 +250,55 @@
         // --- DATA STORE ---
         // Mock database for the MVP
         
+        const surveyTemplates = [
+            { id: 1, name: 'Application', description: 'Initial application form for landowners.', questionCount: 8, icon: 'fa-folder-plus', questions: [] },
+            { id: 2, name: 'Plan for Nature', description: 'Feedback survey for the ecological plan service.', questionCount: 6, icon: 'fa-feather-alt', questions: [] },
+            { id: 3, name: 'Wildlife Pond', description: 'Pre-implementation questions for pond projects.', questionCount: 7, icon: 'fa-water', questions: [] },
+            { id: 4, name: 'Post Project Survey', description: 'General feedback survey for completed projects.', questionCount: 5, icon: 'fa-award', questions: [] },
+            { 
+                id: 5, 
+                name: 'Pond Assessment', 
+                description: 'Detailed on-site assessment for wildlife ponds.', 
+                questionCount: 15,
+                icon: 'fa-vial',
+                questions: [
+                    { type: 'text', label: 'HC Participant' },
+                    { type: 'date', label: 'Date of Visit' },
+                    { type: 'text', label: 'Eircode' },
+                    { type: 'text', label: 'Surveyor' },
+                    { type: 'tel', label: 'Phone Number' },
+                    { type: 'radio', label: 'Fixed Point Photo taken?', options: ['Yes', 'No'] },
+                    { type: 'number', label: 'Size (m2)' },
+                    { type: 'radio', label: 'Holding Water?', options: ['Yes', 'No'] },
+                    { type: 'text', label: 'If no, is it Ephemeral or has it failed?' },
+                    { type: 'radio', label: 'Plants', options: ['All native', 'Some non-native', 'Some invasive'] },
+                    { type: 'textarea', label: 'Insects present during visit? If yes, which?' },
+                    { type: 'textarea', label: 'Were you happy with the pond site visit? Was enough info given?' },
+                    { type: 'radio', label: 'Did you utilise the resources (webinar, pond notes)?', options: ['Yes', 'No'] },
+                    { type: 'radio', label: 'Are you happy with the way your pond has turned out?', options: ['Yes', 'No'] },
+                    { type: 'checkbox', label: 'Most Important to you:', options: ['Money', 'Pond Advisor', 'Resources'] }
+                ] 
+            },
+            { 
+                id: 6, 
+                name: 'Woodland Assessment', 
+                description: 'On-site assessment for mini woodland projects.', 
+                questionCount: 9,
+                icon: 'fa-tree',
+                questions: [
+                    { type: 'text', label: 'HC Participant' },
+                    { type: 'date', label: 'Date of Visit' },
+                    { type: 'text', label: 'Eircode & Phone' },
+                    { type: 'text', label: 'Surveyor' },
+                    { type: 'number', label: 'Companion Species: % survival rating' },
+                    { type: 'number', label: 'Burren Pine: % survival rating' },
+                    { type: 'checkbox', label: 'Additional inputs:', options: ['Stakes', 'Fencing', 'Tree Guards', 'Other'] },
+                    { type: 'checkbox', label: 'Management:', options: ['Trampling', 'Mowing', 'Mulching', 'Spraying', 'None', 'Other'] },
+                    { type: 'textarea', label: 'Additional Comments?' }
+                ] 
+            }
+        ];
+
         const teamMembers = [
             { id: 1, name: 'Peter Jones', role: 'Hydrologist', email: 'peter.jones@dulra.ie', phone: '353871112233', assignments: [ { projectId: 1, status: 'Pending' }, { projectId: 4, status: 'Waiting for Information' }, { projectId: 15, status: 'Completed' }, { projectId: 22, status: 'Pending' } ] },
             { id: 2, name: 'Maria Garcia', role: 'Ecologist', email: 'maria.garcia@dulra.ie', phone: '353872223344', assignments: [ { projectId: 2, status: 'Completed' }, { projectId: 8, status: 'Pending' }, { projectId: 18, status: 'Completed' } ] },
@@ -322,7 +368,7 @@
 
         // --- GLOBAL STATE ---
         const state = {
-            currentView: 'dashboard', // 'dashboard', 'projectDetail', 'team'
+            currentView: 'overview', // 'overview', 'dashboard', 'projectDetail', 'team', 'surveys'
             currentProjectId: null,
             currentTeamMemberId: null,
             filterText: '',
@@ -332,8 +378,10 @@
         const contentArea = document.getElementById('content-area');
         const pageTitle = document.getElementById('page-title');
         const searchInput = document.getElementById('search-input');
+        const homeLink = document.getElementById('home-link');
         const dashboardLink = document.getElementById('dashboard-link');
         const addProjectBtn = document.getElementById('add-project-btn');
+        const surveysLink = document.getElementById('surveys-link');
 
         // --- STATUS STYLES MAPPING ---
         const statusStyles = {
@@ -356,6 +404,127 @@
         };
 
         // --- RENDER FUNCTIONS ---
+
+        /**
+         * Sets the active link in the sidebar
+         */
+        function setActiveLink(activeLink) {
+            // Remove active styles from all main links
+            [homeLink, dashboardLink, surveysLink].forEach(link => {
+                if (link) { // Check if link exists
+                    link.classList.remove('bg-green-100', 'text-green-800', 'font-semibold');
+                    link.classList.add('text-gray-600', 'hover:bg-gray-200');
+                }
+            });
+            // Add active styles to the target link
+            if (activeLink) {
+                activeLink.classList.add('bg-green-100', 'text-green-800', 'font-semibold');
+                activeLink.classList.remove('text-gray-600', 'hover:bg-gray-200');
+            }
+        }
+
+        /**
+         * Renders the main overview/home page.
+         */
+        function renderOverviewPage() {
+            state.currentView = 'overview';
+            state.currentProjectId = null;
+            state.currentTeamMemberId = null;
+            pageTitle.textContent = 'Platform Overview';
+            addProjectBtn.classList.add('hidden');
+            setActiveLink(homeLink);
+
+            contentArea.innerHTML = `
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8 max-w-4xl mx-auto">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">The Project Dulra Management Platform</h2>
+                    <p class="text-lg text-gray-600 mb-8">A comprehensive solution designed to bring efficiency and scalability to your environmental projects. This platform is built on six core modules:</p>
+
+                    <div class="space-y-8">
+                        <!-- 1. Participant Onboarding -->
+                        <div class="flex items-start">
+                            <i class="fas fa-user-plus fa-2x text-green-600 w-12 text-center mt-1"></i>
+                            <div class="ml-4 flex-1">
+                                <h3 class="text-xl font-semibold mb-1">1. Participant Onboarding & Management</h3>
+                                <p class="text-gray-600 mb-2">Automate the sign-up process from the start.</p>
+                                <ul class="list-disc list-inside text-sm text-gray-500 space-y-1">
+                                    <li><strong>Configurable Sign-Up Forms:</strong> Participants apply and submit data through a guided digital form.</li>
+                                    <li><strong>Backend Approval System:</strong> Your team can approve or tag participants based on pre-set criteria.</li>
+                                    <li><strong>Application Progress Notifications:</strong> Automatic updates keep participants informed.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- 2. Workflow Management -->
+                        <div class="flex items-start">
+                            <i class="fas fa-tasks fa-2x text-green-600 w-12 text-center mt-1"></i>
+                            <div class="ml-4 flex-1">
+                                <h3 class="text-xl font-semibold mb-1">2. Workflow Management</h3>
+                                <p class="text-gray-600 mb-2">Get a real-time, comprehensive view of your entire operation.</p>
+                                <ul class="list-disc list-inside text-sm text-gray-500 space-y-1">
+                                    <li><strong>Real-Time Dashboard:</strong> Shows the live status, key metrics, and progress of all projects.</li>
+                                    <li><strong>Customizable Workflows:</strong> Organise surveys, actions, and assign team members.</li>
+                                    <li><strong>Workload Visibility:</strong> Views show the current workload and capacity of individual team members.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- 3. Data Management -->
+                        <div class="flex items-start">
+                            <i class="fas fa-database fa-2x text-green-600 w-12 text-center mt-1"></i>
+                            <div class="ml-4 flex-1">
+                                <h3 class="text-xl font-semibold mb-1">3. Data Management</h3>
+                                <p class="text-gray-600 mb-2">Efficient data collection, verification, and storage for all field activities.</p>
+                                <ul class="list-disc list-inside text-sm text-gray-500 space-y-1">
+                                    <li><strong>Digital Data Collection:</strong> Create, manage, and deploy digital surveys and on-site assessment forms from a phone or tablet.</li>
+                                    <li><strong>Eliminate Paperwork:</strong> Data is captured instantly and syncs directly to relevant project files.</li>
+                                    <li><strong>Monitoring & Audit Trail:</strong> Connect to monitoring tools and maintain an audit trail for all data.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- 4. Reporting & Impact Generation -->
+                        <div class="flex items-start">
+                            <i class="fas fa-chart-pie fa-2x text-green-600 w-12 text-center mt-1"></i>
+                            <div class="ml-4 flex-1">
+                                <h3 class="text-xl font-semibold mb-1">4. Reporting & Impact Generation</h3>
+                                <p class="text-gray-600 mb-2">Turn raw data into professional, stakeholder-ready reports.</p>
+                                <ul class="list-disc list-inside text-sm text-gray-500 space-y-1">
+                                    <li><strong>Template-Based Reporting:</strong> Instantly generate reports for ESG, CSRD, EU Restoration Targets, etc.</li>
+                                    <li><strong>Automatic Data Aggregation:</strong> The platform automatically pulls and aggregates data from all modules.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- 5. Communications Suite -->
+                        <div class="flex items-start">
+                            <i class="fas fa-bullhorn fa-2x text-green-600 w-12 text-center mt-1"></i>
+                            <div class="ml-4 flex-1">
+                                <h3 class="text-xl font-semibold mb-1">5. Integrated Communications Suite</h3>
+                                <p class="text-gray-600 mb-2">Engage with your participants efficiently and effectively.</p>
+                                <ul class="list-disc list-inside text-sm text-gray-500 space-y-1">
+                                    <li><strong>Targeted Bulk Messaging:</strong> Send individual or filtered bulk Emails and WhatsApp messages.</li>
+                                    <li><strong>Filter-Based Sending:</strong> Use filters (like action type or project status) to reach the right people.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- 6. Project Visualisation -->
+                        <div class="flex items-start">
+                            <i class="fas fa-map-marked-alt fa-2x text-green-600 w-12 text-center mt-1"></i>
+                            <div class="ml-4 flex-1">
+                                <h3 class="text-xl font-semibold mb-1">6. Project Visualisation (Phase 2)</h3>
+                                <p class="text-gray-600 mb-2">Create a public-facing interactive map and key impact dashboard.</p>
+                                <ul class="list-disc list-inside text-sm text-gray-500 space-y-1">
+                                    <li><strong>Public-Facing Showcase:</strong> Showcase projects to enable stakeholders to explore and assess projects for funding.</li>
+                                    <li><strong>Provide Context:</strong> Provides geographic and impact context to your projects.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            `;
+        }
         
         /**
          * Renders the main dashboard view with project cards.
@@ -366,6 +535,7 @@
             state.currentTeamMemberId = null;
             pageTitle.textContent = 'Projects Dashboard';
             addProjectBtn.classList.remove('hidden');
+            setActiveLink(dashboardLink);
 
             const filteredProjects = projects.filter(p => 
                 p.landowner.toLowerCase().includes(state.filterText.toLowerCase()) ||
@@ -418,6 +588,8 @@
             state.currentProjectId = projectId;
             state.currentTeamMemberId = null;
             addProjectBtn.classList.add('hidden');
+            // Note: No sidebar link is active when in a detail view
+            setActiveLink(null);
 
             const project = projects.find(p => p.id === projectId);
             if (!project) {
@@ -555,93 +727,47 @@
         }
 
         /**
-         * Renders the team members list view.
+         * Renders the survey templates management page.
          */
-        function renderTeamMembers() {
-            state.currentView = 'team';
+        function renderSurveysPage() {
+            state.currentView = 'surveys';
             state.currentProjectId = null;
             state.currentTeamMemberId = null;
-            pageTitle.textContent = 'Team Members';
-            addProjectBtn.classList.add('hidden');
+            pageTitle.textContent = 'Survey Templates';
+            addProjectBtn.classList.add('hidden'); // Or change to "+ Create Survey" button logic
+            setActiveLink(surveysLink);
 
-            const teamListItems = teamMembers.map(member => `
-                <div class="list-item-card bg-white px-4 py-3 grid grid-cols-10 gap-4 items-center border-b border-l-4 border-transparent cursor-pointer transition-all" onclick="renderTeamMemberDetail(${member.id})">
-                    <div class="col-span-3 font-semibold text-gray-800">${member.name}</div>
-                    <div class="col-span-2 text-sm text-gray-600">${member.role}</div>
-                    <div class="col-span-3 text-sm text-gray-600">${member.email}</div>
-                    <div class="col-span-2 text-sm text-gray-600">${member.phone}</div>
+            const surveyCards = surveyTemplates.map(template => `
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 flex flex-col hover:shadow-lg transition-shadow">
+                    <div class="flex-grow">
+                        <div class="flex items-center text-green-600 mb-3">
+                            <i class="fas ${template.icon || 'fa-poll'} fa-lg mr-3"></i>
+                            <h3 class="font-bold text-lg text-gray-800">${template.name}</h3>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-4">${template.description}</p>
+                    </div>
+                    <div class="flex justify-between items-center text-xs text-gray-500 pt-4 border-t">
+                        <span>${template.questionCount} Questions</span>
+                        <div>
+                            <a href="#" class="hover:text-green-600 mr-3"><i class="fas fa-edit mr-1"></i> Edit</a>
+                            <a href="#" class="hover:text-green-600"><i class="fas fa-copy mr-1"></i> Duplicate</a>
+                        </div>
+                    </div>
                 </div>
             `).join('');
 
-            const teamListHeader = `
-                <div class="px-4 py-2 bg-gray-50 grid grid-cols-10 gap-4 text-xs font-bold text-gray-500 uppercase rounded-t-lg">
-                    <div class="col-span-3">Name</div>
-                    <div class="col-span-2">Role</div>
-                    <div class="col-span-3">Email</div>
-                    <div class="col-span-2">Phone</div>
-                </div>
-            `;
-
             contentArea.innerHTML = `
-                <div class="bg-white rounded-lg shadow-sm border border-gray-200">
-                    ${teamListHeader}
-                    <div class="max-h-[75vh] overflow-y-auto">
-                        ${teamListItems}
+                <div class="flex justify-between items-center mb-6">
+                    <div>
+                        <h2 class="text-xl font-semibold">Manage Surveys</h2>
+                        <p class="text-gray-500">Create, edit, and manage all survey and assessment templates.</p>
                     </div>
-                </div>`;
-        }
-
-        /**
-         * Renders the detailed view for a single team member.
-         */
-        function renderTeamMemberDetail(memberId) {
-            state.currentView = 'teamDetail';
-            state.currentTeamMemberId = memberId;
-            state.currentProjectId = null;
-            addProjectBtn.classList.add('hidden');
-
-            const member = teamMembers.find(m => m.id === memberId);
-            pageTitle.textContent = `Team Member: ${member.name}`;
-
-            const assignmentItems = member.assignments.map(assign => {
-                const project = projects.find(p => p.id === assign.projectId);
-                return `
-                    <div class="list-item-card bg-white px-4 py-3 grid grid-cols-10 gap-4 items-center border-b border-l-4 border-transparent cursor-pointer transition-all" onclick="navigateToProject(${project.id})">
-                        <div class="col-span-3 font-semibold text-gray-800">${project.landowner}</div>
-                        <div class="col-span-2 text-sm text-gray-600">${project.county}</div>
-                        <div class="col-span-3 text-sm text-gray-600">${project.actionType}</div>
-                        <div class="col-span-2">
-                             <span class="text-xs font-semibold px-3 py-1 rounded-full ${assignmentStatusStyles[assign.status] || 'bg-gray-100 text-gray-800'}">${assign.status}</span>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-
-            const assignmentHeader = `
-                 <div class="px-4 py-2 bg-gray-50 grid grid-cols-10 gap-4 text-xs font-bold text-gray-500 uppercase rounded-t-lg">
-                    <div class="col-span-3">Assigned Landowner</div>
-                    <div class="col-span-2">County</div>
-                    <div class="col-span-3">Action Type</div>
-                    <div class="col-span-2">Assignment Status</div>
+                    <button class="bg-green-600 text-white px-4 py-2 rounded-full font-semibold hover:bg-green-700 transition-all shadow-md">
+                        <i class="fas fa-plus mr-2"></i>Create Survey
+                    </button>
                 </div>
-            `;
-
-            contentArea.innerHTML = `
-                <div class="bg-white p-6 rounded-lg shadow-sm border mb-6">
-                    <h3 class="font-bold text-lg mb-4">Contact Information</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                        <div><strong class="text-gray-500 block">Name:</strong> ${member.name}</div>
-                        <div><strong class="text-gray-500 block">Role:</strong> ${member.role}</div>
-                        <div><strong class="text-gray-500 block">Email:</strong> <a href="mailto:${member.email}" class="text-green-600 hover:underline">${member.email}</a></div>
-                        <div><strong class="text-gray-500 block">Phone:</strong> ${member.phone}</div>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow-sm border border-gray-200">
-                    <h3 class="font-bold text-lg p-4 border-b">Assigned Projects</h3>
-                    ${assignmentHeader}
-                    <div class="max-h-[60vh] overflow-y-auto">
-                        ${assignmentItems}
-                    </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                    ${surveyCards}
                 </div>
             `;
         }
@@ -950,9 +1076,19 @@
         }
 
         // --- EVENT LISTENERS ---
+        homeLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            renderOverviewPage();
+        });
+
         dashboardLink.addEventListener('click', (e) => {
             e.preventDefault();
             navigateToDashboard();
+        });
+
+        surveysLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            renderSurveysPage();
         });
         
         addProjectBtn.addEventListener('click', openNewProjectModal);
@@ -1010,11 +1146,20 @@
 
         // --- INITIALIZATION ---
         document.addEventListener('DOMContentLoaded', () => {
-            renderDashboard();
+            renderOverviewPage();
         });
     </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
 
 
 
