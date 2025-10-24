@@ -66,7 +66,7 @@
                     <button class="collapsible-btn w-full flex justify-between items-center p-3 text-gray-600 hover:bg-gray-200 rounded-lg text-left">
                         <div class="flex items-center">
                             <i class="fas fa-calendar-alt w-6 text-center"></i>
-                            <span class="ml-4 font-semibold">Year</span>
+                            <span class="ml-4 font-semibold">Project Year</span>
                         </div>
                         <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
                     </button>
@@ -296,6 +296,27 @@
                     { type: 'checkbox', label: 'Management:', options: ['Trampling', 'Mowing', 'Mulching', 'Spraying', 'None', 'Other'] },
                     { type: 'textarea', label: 'Additional Comments?' }
                 ] 
+            },
+            { 
+                id: 7, 
+                name: 'Rossbehy Assessment', 
+                description: 'Detailed on-site assessment for Rossbehy coastal projects.', 
+                questionCount: 12,
+                icon: 'fa-water',
+                questions: [
+                    { type: 'text', label: 'HC Participant' },
+                    { type: 'date', label: 'Date of Visit' },
+                    { type: 'text', label: 'Eircode' },
+                    { type: 'text', label: 'Surveyor' },
+                    { type: 'radio', label: 'Fixed Point Photo taken?', options: ['Yes', 'No'] },
+                    { type: 'number', label: 'Area Surveyed (m2)' },
+                    { type: 'text', label: 'Primary Habitat Type', placeholder: 'e.g., Dune system, Salt marsh' },
+                    { type: 'checkbox', label: 'Pressures Observed', options: ['Coastal Erosion', 'Invasive Species (e.g., Sea Buckthorn)', 'Pollution', 'Recreation Impact', 'None'] },
+                    { type: 'textarea', label: 'Invasive Species Details' },
+                    { type: 'radio', label: 'Overall Condition', options: ['Good', 'Moderate', 'Poor'] },
+                    { type: 'textarea', label: 'Management Recommendations' },
+                    { type: 'textarea', label: 'Additional Comments?' }
+                ] 
             }
         ];
 
@@ -368,7 +389,7 @@
 
         // --- GLOBAL STATE ---
         const state = {
-            currentView: 'overview', // 'overview', 'dashboard', 'projectDetail', 'team', 'surveys'
+            currentView: 'overview', // 'overview', 'dashboard', 'projectDetail', 'team', 'surveys', 'mindmap'
             currentProjectId: null,
             currentTeamMemberId: null,
             filterText: '',
@@ -578,6 +599,20 @@
                         ${projectListItems}
                     </div>
                 </div>`;
+
+            contentArea.innerHTML = `
+                <div class="flex justify-between items-center mb-4">
+                    <p class="text-sm text-gray-500">Showing ${filteredProjects.length} projects.</p>
+                    <button id="view-structure-btn" class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-full font-semibold hover:bg-gray-50 transition-all text-sm">
+                        <i class="fas fa-sitemap mr-2"></i>View Project Structure
+                    </button>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                    ${projectListHeader}
+                    <div class="max-h-[75vh] overflow-y-auto">
+                        ${projectListItems}
+                    </div>
+                </div>`;
         }
 
         /**
@@ -768,6 +803,128 @@
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                     ${surveyCards}
+                </div>
+            `;
+        }
+
+        /**
+         * Renders the Mind Map/Project Structure page
+         */
+        function renderMindmapPage() {
+            state.currentView = 'mindmap';
+            state.currentProjectId = null;
+            state.currentTeamMemberId = null;
+            pageTitle.textContent = 'Project Structure Overview';
+            addProjectBtn.classList.add('hidden');
+            setActiveLink(null); // No main link is active
+
+            contentArea.innerHTML = `
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8 max-w-4xl mx-auto">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800">The Hare's Corner - Structure</h2>
+                        <button id="back-to-dashboard-btn" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-full font-semibold hover:bg-gray-300 transition-all">
+                            <i class="fas fa-arrow-left mr-2"></i>Back to Dashboard
+                        </button>
+                    </div>
+
+                    <div class="space-y-2">
+                        <!-- Action Implementation -->
+                        <div>
+                            <button class="collapsible-btn w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 rounded-lg text-left">
+                                <span class="font-semibold text-lg"><i class="fas fa-tasks w-8 text-center text-gray-500 mr-3"></i>Action Implementation</span>
+                                <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
+                            </button>
+                            <div class="collapsible-content hidden pl-16 py-2 space-y-1 text-gray-600">
+                                <p>Wildlife Pond</p>
+                                <p>Plan for Nature</p>
+                                <p>Mini Woodland</p>
+                                <p>Other</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Application Approval Process -->
+                        <div>
+                            <button class="collapsible-btn w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 rounded-lg text-left">
+                                <span class="font-semibold text-lg"><i class="fas fa-folder-plus w-8 text-center text-gray-500 mr-3"></i>Application Approval Process</span>
+                                <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
+                            </button>
+                            <div class="collapsible-content hidden pl-16 py-2 space-y-1 text-gray-600">
+                                <p>Online Application Form</p>
+                                <p>Internal Review & Scoring</p>
+                                <p>Approval/Rejection Comms</p>
+                            </div>
+                        </div>
+
+                        <!-- Participant Communication Strategy -->
+                        <div>
+                            <button class="collapsible-btn w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 rounded-lg text-left">
+                                <span class="font-semibold text-lg"><i class="fas fa-bullhorn w-8 text-center text-gray-500 mr-3"></i>Participant Communication Strategy</span>
+                                <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
+                            </button>
+                            <div class="collapsible-content hidden pl-16 py-2 space-y-1 text-gray-600">
+                                <p>Bulk Communication (Email, WhatsApp)</p>
+                                <p>Individual Communication (Project Milestones)</p>
+                                <p>Resource Hub (Guides, Webinars)</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Data Collection & Reporting -->
+                        <div>
+                            <button class="collapsible-btn w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 rounded-lg text-left">
+                                <span class="font-semibold text-lg"><i class="fas fa-database w-8 text-center text-gray-500 mr-3"></i>Data Collection & Reporting</span>
+                                <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
+                            </button>
+                            <div class="collapsible-content hidden pl-16 py-2 space-y-1 text-gray-600">
+                                <p>Participant Surveys (Google Forms)</p>
+                                <div>
+                                    <button class="collapsible-btn w-full flex justify-between items-center p-2 text-gray-600 text-left">
+                                        <span class="font-semibold">On-Site Assessments</span>
+                                        <i class="fas fa-chevron-down transform transition-transform duration-200 text-xs"></i>
+                                    </button>
+                                    <div class="collapsible-content hidden pl-8 py-2 space-y-1 text-sm">
+                                        <p>Pond Assessment Sheet</p>
+                                        <p>Woodland Assessment Sheet</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <button class="collapsible-btn w-full flex justify-between items-center p-2 text-gray-600 text-left">
+                                        <span class="font-semibold">Funder Reporting</span>
+                                        <i class="fas fa-chevron-down transform transition-transform duration-200 text-xs"></i>
+                                    </button>
+                                    <div class="collapsible-content hidden pl-8 py-2 space-y-1 text-sm">
+                                        <p>Private Funders (ESG, CSRD)</p>
+                                        <p>Public Funders (EU Targets)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Financials -->
+                        <div>
+                            <button class="collapsible-btn w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 rounded-lg text-left">
+                                <span class="font-semibold text-lg"><i class="fas fa-euro-sign w-8 text-center text-gray-500 mr-3"></i>Financials</span>
+                                <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
+                            </button>
+                            <div class="collapsible-content hidden pl-16 py-2 space-y-1 text-gray-600">
+                                <p>Grant Management</p>
+                                <p>Payment Processing</p>
+                            </div>
+                        </div>
+
+                        <!-- Team Members -->
+                        <div>
+                            <button class="collapsible-btn w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 rounded-lg text-left">
+                                <span class="font-semibold text-lg"><i class="fas fa-users w-8 text-center text-gray-500 mr-3"></i>Team Members</span>
+                                <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
+                            </button>
+                            <div class="collapsible-content hidden pl-16 py-2 space-y-1 text-gray-600">
+                                <p>Coordinators</p>
+                                <p>Ecologists</p>
+                                <p>Hydrologists</p>
+                                <p>Assessors</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             `;
         }
@@ -1100,6 +1257,24 @@
             }
         });
 
+        // Event delegation for dynamically added elements
+        contentArea.addEventListener('click', (e) => {
+            // Check for "View Structure" button
+            const structureBtn = e.target.closest('#view-structure-btn');
+            if (structureBtn) {
+                e.preventDefault();
+                renderMindmapPage();
+            }
+
+            // Check for "Back to Dashboard" button
+            const backBtn = e.target.closest('#back-to-dashboard-btn');
+            if (backBtn) {
+                e.preventDefault();
+                renderDashboard();
+            }
+        });
+
+
         // Communication sidebar links
         document.querySelectorAll('.comm-link').forEach(link => {
             link.addEventListener('click', (e) => {
@@ -1118,20 +1293,23 @@
             });
         });
 
-        // Sidebar collapsible sections
-        document.querySelectorAll('.collapsible-btn').forEach(button => {
-            button.addEventListener('click', () => {
+        // Sidebar collapsible sections - MODIFIED FOR EVENT DELEGATION
+        document.body.addEventListener('click', (e) => {
+            const button = e.target.closest('.collapsible-btn');
+            if (button) {
                 const content = button.nextElementSibling;
                 const icon = button.querySelector('i.fa-chevron-down');
 
-                if (content.classList.contains('hidden')) {
-                    content.classList.remove('hidden');
-                    icon.classList.add('rotate-180');
-                } else {
-                    content.classList.add('hidden');
-                    icon.classList.remove('rotate-180');
+                if (content && icon) {
+                    if (content.classList.contains('hidden')) {
+                        content.classList.remove('hidden');
+                        icon.classList.add('rotate-180');
+                    } else {
+                        content.classList.add('hidden');
+                        icon.classList.remove('rotate-180');
+                    }
                 }
-            });
+            }
         });
 
         // Close modals with Escape key
@@ -1151,12 +1329,6 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
 
 
 
