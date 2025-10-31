@@ -419,22 +419,10 @@
         };
 
         // --- DOM ELEMENTS ---
-        const contentArea = document.getElementById('content-area');
-        const pageTitle = document.getElementById('page-title');
-        const searchInput = document.getElementById('search-input');
-        const homeLink = document.getElementById('home-link');
-        const dashboardLink = document.getElementById('dashboard-link');
-        const addProjectBtn = document.getElementById('add-project-btn');
-        const surveysLink = document.getElementById('surveys-link');
-        const implementationLink = document.getElementById('implementation-link');
-        const assessmentsLink = document.getElementById('assessments-link');
-        const communicationLink = document.getElementById('communication-link');
-        const teamLink = document.getElementById('team-link');
-        // New login/app elements
-        const loginPage = document.getElementById('login-page');
-        const appContainer = document.getElementById('app');
-        const loginForm = document.getElementById('login-form');
-        const logoutBtn = document.getElementById('logout-btn');
+        // These will be defined inside DOMContentLoaded
+        let contentArea, pageTitle, searchInput, homeLink, dashboardLink, addProjectBtn,
+            surveysLink, implementationLink, assessmentsLink, communicationLink, teamLink,
+            loginPage, appContainer, loginForm, logoutBtn;
 
 
         // --- STATUS STYLES MAPPING ---
@@ -1575,84 +1563,85 @@
         }
 
         // --- EVENT LISTENERS ---
-        homeLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            renderOverviewPage();
-        });
+        function attachNavListeners() {
+            homeLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                renderOverviewPage();
+            });
 
-        dashboardLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            navigateToDashboard();
-        });
+            dashboardLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                navigateToDashboard();
+            });
 
-        surveysLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            renderSurveysPage();
-        });
-        
-        addProjectBtn.addEventListener('click', openNewProjectModal);
+            surveysLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                renderSurveysPage();
+            });
+            
+            addProjectBtn.addEventListener('click', openNewProjectModal);
 
-        searchInput.addEventListener('keyup', (e) => {
-            state.filterText = e.target.value;
-            if (state.currentView === 'dashboard') {
+            searchInput.addEventListener('keyup', (e) => {
+                state.filterText = e.target.value;
+                if (state.currentView === 'dashboard') {
+                    renderDashboard();
+                }
+            });
+
+            // Event delegation for dynamically added elements
+            contentArea.addEventListener('click', (e) => {
+                // Check for "View Structure" button
+                const structureBtn = e.target.closest('#view-structure-btn');
+                if (structureBtn) {
+                    e.preventDefault();
+                    renderMindmapPage();
+                }
+
+                // Check for "Back to Dashboard" button
+                const backBtn = e.target.closest('#back-to-dashboard-btn');
+                if (backBtn) {
+                    e.preventDefault();
+                    renderDashboard();
+                }
+
+                // Check for dashboard tab clicks
+                const tabBtn = e.target.closest('.dashboard-tab');
+                if (tabBtn) {
+                    e.preventDefault();
+                    updateDashboardView(tabBtn.dataset.view);
+                }
+            });
+
+
+            // Communication sidebar links
+            implementationLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                // Placeholder: Renders the main dashboard. This can be built out.
                 renderDashboard();
-            }
-        });
+                updateDashboardView('list');
+            });
 
-        // Event delegation for dynamically added elements
-        contentArea.addEventListener('click', (e) => {
-            // Check for "View Structure" button
-            const structureBtn = e.target.closest('#view-structure-btn');
-            if (structureBtn) {
+            assessmentsLink.addEventListener('click', (e) => {
                 e.preventDefault();
-                renderMindmapPage();
-            }
+                // Placeholder: Renders the surveys page, as assessments are a type of survey.
+                renderSurveysPage();
+            });
 
-            // Check for "Back to Dashboard" button
-            const backBtn = e.target.closest('#back-to-dashboard-btn');
-            if (backBtn) {
+            communicationLink.addEventListener('click', (e) => {
                 e.preventDefault();
-                renderDashboard();
-            }
+                // Defaults to 'county' filter, can be changed to a general comms page
+                openCommunicationModal('county');
+            });
 
-            // Check for dashboard tab clicks
-            const tabBtn = e.target.closest('.dashboard-tab');
-            if (tabBtn) {
+            // Team Members sidebar links
+            teamLink.addEventListener('click', (e) => {
                 e.preventDefault();
-                updateDashboardView(tabBtn.dataset.view);
-            }
-        });
+                renderTeamMembers();
+            });
 
-
-        // Communication sidebar links
-        implementationLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            // Placeholder: Renders the main dashboard. This can be built out.
-            renderDashboard();
-            updateDashboardView('list');
-        });
-
-        assessmentsLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            // Placeholder: Renders the surveys page, as assessments are a type of survey.
-            renderSurveysPage();
-        });
-
-        communicationLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            // Defaults to 'county' filter, can be changed to a general comms page
-            openCommunicationModal('county');
-        });
-
-        // Team Members sidebar links
-        teamLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            renderTeamMembers();
-        });
-
-        // --- NEW LOGIN LISTENERS ---
-        logoutBtn.addEventListener('click', handleLogout);
-
+            // --- NEW LOGIN LISTENERS ---
+            logoutBtn.addEventListener('click', handleLogout);
+        }
 
         // Sidebar collapsible sections - MODIFIED FOR EVENT DELEGATION
         document.body.addEventListener('click', (e) => {
@@ -1685,16 +1674,32 @@
 
         // --- INITIALIZATION ---
         document.addEventListener('DOMContentLoaded', () => {
-            // Don't render the app immediately.
-            // Set up the login form listener instead.
+            // Define all DOM elements *after* the DOM is loaded
+            contentArea = document.getElementById('content-area');
+            pageTitle = document.getElementById('page-title');
+            searchInput = document.getElementById('search-input');
+            homeLink = document.getElementById('home-link');
+            dashboardLink = document.getElementById('dashboard-link');
+            addProjectBtn = document.getElementById('add-project-btn');
+            surveysLink = document.getElementById('surveys-link');
+            implementationLink = document.getElementById('implementation-link');
+            assessmentsLink = document.getElementById('assessments-link');
+            communicationLink = document.getElementById('communication-link');
+            teamLink = document.getElementById('team-link');
+            loginPage = document.getElementById('login-page');
+            appContainer = document.getElementById('app');
+            loginForm = document.getElementById('login-form');
+            logoutBtn = document.getElementById('logout-btn');
+
+            // Attach listeners for the main app navigation
+            attachNavListeners();
+
+            // Set up the login form listener
             loginForm.addEventListener('submit', handleLogin);
         });
     </script>
 </body>
 </html>
-
-
-
 
 
 
