@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nature Project Management Platform</title>
+    <title>Project Dulra Management Platform</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -66,7 +67,7 @@
                     <button class="collapsible-btn w-full flex justify-between items-center p-3 text-gray-600 hover:bg-gray-200 rounded-lg text-left">
                         <div class="flex items-center">
                             <i class="fas fa-calendar-alt w-6 text-center"></i>
-                            <span class="ml-4 font-semibold">Archive</span>
+                            <span class="ml-4 font-semibold">Project Year</span>
                         </div>
                         <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
                     </button>
@@ -93,19 +94,12 @@
                 </div>
 
                 <!-- Implementation Section -->
-                <div>
-                    <button class="collapsible-btn w-full flex justify-between items-center p-3 text-gray-600 hover:bg-gray-200 rounded-lg text-left">
-                         <div class="flex items-center">
-                            <i class="fas fa-tasks w-6 text-center"></i>
-                            <span class="ml-4 font-semibold">Implementation</span>
-                        </div>
-                        <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
-                    </button>
-                    <div class="collapsible-content hidden pl-8 mt-1 space-y-1">
-                        <a href="#" class="block p-2 text-sm text-gray-500 hover:bg-gray-100 rounded-md">By County</a>
-                        <a href="#" class="block p-2 text-sm text-gray-500 hover:bg-gray-100 rounded-md">By Action</a>
+                <a href="#" id="implementation-link" class="flex items-center p-3 text-gray-600 hover:bg-gray-200 rounded-lg text-left">
+                     <div class="flex items-center">
+                        <i class="fas fa-tasks w-6 text-center"></i>
+                        <span class="ml-4 font-semibold">Implementation</span>
                     </div>
-                </div>
+                </a>
 
                 <!-- Surveys Section -->
                 <a href="#" id="surveys-link" class="flex items-center p-3 text-gray-600 hover:bg-gray-200 rounded-lg text-left">
@@ -116,49 +110,28 @@
                 </a>
 
                 <!-- Assessments Section -->
-                <div>
-                    <button class="collapsible-btn w-full flex justify-between items-center p-3 text-gray-600 hover:bg-gray-200 rounded-lg text-left">
-                        <div class="flex items-center">
-                            <i class="fas fa-clipboard-check w-6 text-center"></i>
-                            <span class="ml-4 font-semibold">Assessments</span>
-                        </div>
-                        <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
-                    </button>
-                    <div class="collapsible-content hidden pl-8 mt-1 space-y-1">
-                        <a href="#" class="block p-2 text-sm text-gray-500 hover:bg-gray-100 rounded-md">By County</a>
-                        <a href="#" class="block p-2 text-sm text-gray-500 hover:bg-gray-100 rounded-md">By Action</a>
+                <a href="#" id="assessments-link" class="flex items-center p-3 text-gray-600 hover:bg-gray-200 rounded-lg text-left">
+                    <div class="flex items-center">
+                        <i class="fas fa-clipboard-check w-6 text-center"></i>
+                        <span class="ml-4 font-semibold">Assessments</span>
                     </div>
-                </div>
+                </a>
 
                 <!-- Communication Section -->
-                <div>
-                    <button class="collapsible-btn w-full flex justify-between items-center p-3 text-gray-600 hover:bg-gray-200 rounded-lg text-left">
-                        <div class="flex items-center">
-                            <i class="fas fa-bullhorn w-6 text-center"></i>
-                            <span class="ml-4 font-semibold">Communication</span>
-                        </div>
-                        <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
-                    </button>
-                    <div class="collapsible-content hidden pl-8 mt-1 space-y-1">
-                        <a href="#" class="comm-link block p-2 text-sm text-gray-500 hover:bg-gray-100 rounded-md" data-filter="county">By County</a>
-                        <a href="#" class="comm-link block p-2 text-sm text-gray-500 hover:bg-gray-100 rounded-md" data-filter="action">By Action</a>
+                <a href="#" id="communication-link" class="flex items-center p-3 text-gray-600 hover:bg-gray-200 rounded-lg text-left">
+                    <div class="flex items-center">
+                        <i class="fas fa-bullhorn w-6 text-center"></i>
+                        <span class="ml-4 font-semibold">Communication</span>
                     </div>
-                </div>
+                </a>
 
                 <!-- Team Members Section -->
-                <div>
-                    <button class="collapsible-btn w-full flex justify-between items-center p-3 text-gray-600 hover:bg-gray-200 rounded-lg text-left">
-                        <div class="flex items-center">
-                            <i class="fas fa-users w-6 text-center"></i>
-                            <span class="ml-4 font-semibold">Team Members</span>
-                        </div>
-                        <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
-                    </button>
-                    <div class="collapsible-content hidden pl-8 mt-1 space-y-1">
-                        <a href="#" class="team-link block p-2 text-sm text-gray-500 hover:bg-gray-100 rounded-md" data-filter="county">By County</a>
-                        <a href="#" class="team-link block p-2 text-sm text-gray-500 hover:bg-gray-100 rounded-md" data-filter="action">By Action</a>
+                <a href="#" id="team-link" class="flex items-center p-3 text-gray-600 hover:bg-gray-200 rounded-lg text-left">
+                    <div class="flex items-center">
+                        <i class="fas fa-users w-6 text-center"></i>
+                        <span class="ml-4 font-semibold">Team Members</span>
                     </div>
-                </div>
+                </a>
 
                 <!-- Reports Section -->
                 <div>
@@ -215,7 +188,7 @@
                             <input type="text" id="search-input" placeholder="Search projects..." class="pl-10 pr-4 py-2 border rounded-full w-64 focus:ring-2 focus:ring-green-500 focus:outline-none">
                         </div>
                         <button id="add-project-btn" class="bg-green-600 text-white px-4 py-2 rounded-full font-semibold hover:bg-green-700 transition-all shadow-md">
-                            <i class="fas fa-plus mr-2"></i>New Application
+                            <i class="fas fa-plus mr-2"></i>New Project
                         </button>
                     </div>
                 </div>
@@ -252,12 +225,12 @@
         
         const surveyTemplates = [
             { id: 1, name: 'Application', description: 'Initial application form for landowners.', questionCount: 8, icon: 'fa-folder-plus', questions: [] },
-            { id: 2, name: 'Plan for Nature', description: 'Feedback survey for the ecological plan service.', questionCount: 6, icon: 'fa-feather-alt', questions: [] },
-            { id: 3, name: 'Wildlife Pond', description: 'Pre-implementation questions for pond projects.', questionCount: 7, icon: 'fa-water', questions: [] },
+            { id: 2, name: 'Scorecard for Peatlands', description: 'Feedback survey for the ecological plan service.', questionCount: 6, icon: 'fa-feather-alt', questions: [] },
+            { id: 3, name: 'Scorecard for Grasslands', description: 'Pre-implementation questions for pond projects.', questionCount: 7, icon: 'fa-water', questions: [] },
             { id: 4, name: 'Post Project Survey', description: 'General feedback survey for completed projects.', questionCount: 5, icon: 'fa-award', questions: [] },
             { 
                 id: 5, 
-                name: 'Pond Assessment', 
+                name: 'Scorecard for Woodland', 
                 description: 'Detailed on-site assessment for wildlife ponds.', 
                 questionCount: 15,
                 icon: 'fa-vial',
@@ -299,8 +272,8 @@
             },
             { 
                 id: 7, 
-                name: 'New Assessment', 
-                description: 'Detailed on-site assessment.', 
+                name: 'Rossbehy Assessment', 
+                description: 'Detailed on-site assessment for Rossbehy coastal projects.', 
                 questionCount: 12,
                 icon: 'fa-water',
                 questions: [
@@ -338,14 +311,15 @@
             const firstNames = ['Liam', 'Olivia', 'Noah', 'Emma', 'Oliver', 'Ava', 'Elijah', 'Charlotte', 'William', 'Sophia', 'James', 'Amelia', 'Benjamin', 'Isabella', 'Lucas', 'Mia'];
             const lastNames = ['Murphy', 'Kelly', 'Byrne', 'Ryan', 'O\'Brien', 'Walsh', 'O\'Connor', 'Doyle', 'McCarthy', 'Gallagher', 'Lynch', 'Murray'];
             const counties = ['Kerry', 'Cork', 'Galway', 'Clare', 'Limerick', 'Tipperary', 'Mayo', 'Donegal'];
-            const actionTypes = ['Wildlife Pond', 'Plan for Nature', 'Mini Woodland'];
+            // Updated Action Types
+            const actionTypes = ['Fencing', 'Blocking Drains', 'Woodland', 'Sphagnum Moss', 'Hedgerow'];
 
             let projectList = [
-                // Keep original diverse-status projects for context
-                 { id: 1, landowner: 'David Miller', county: 'Kerry', eircode: 'V93 AB12', phone: '353871234567', actionType: 'Wildlife Pond', status: 'Implementation', startDate: '2025-08-15', specialist: 'Peter Jones (Hydrologist)', details: 'A 150sqm pond in the lower meadow to enhance local biodiversity and provide a water source for wildlife.', assessments: [], survey: { status: 'Pending', data: null }, activityLog: [{ date: '2025-08-20', activity: 'Hydrologist assigned: Peter Jones' }, { date: '2025-08-15', activity: 'Application approved. Project initiated.' }] },
-                 { id: 2, landowner: 'Sarah Chen', county: 'Cork', eircode: 'T23 CD34', phone: '353872345678', actionType: 'Plan for Nature', status: 'Data Collection', startDate: '2025-07-01', specialist: 'Maria Garcia (Ecologist)', details: 'A comprehensive ecological plan covering 10 acres of mixed woodland and grassland.', assessments: [{ assessor: 'Maria Garcia', date: '2025-09-10', notes: 'Site visit complete. Excellent potential for native species reintroduction. Soil samples taken.', photos: 2, location: '52.05, -9.51' }], survey: { status: 'Pending', data: null }, activityLog: [{ date: '2025-09-10', activity: 'On-site assessment completed by Maria Garcia.' }, { date: '2025-07-05', activity: 'Ecologist created 10-page plan and delivered to landowner.' }, { date: '2025-07-01', activity: 'Project initiated.' }] },
-                 { id: 3, landowner: 'Tom O\'Sullivan', county: 'Limerick', eircode: 'V94 EF56', phone: '353873456789', actionType: 'Mini Woodland', status: 'Complete', startDate: '2025-04-10', specialist: 'HC Team', details: 'Planting of 300 native Irish trees (oak, birch, rowan) on a 1-acre plot.', assessments: [{ assessor: 'John Doe', date: '2025-09-18', notes: 'Post-action assessment shows 95% tree survival rate. Good growth observed.', photos: 5, location: '52.14, -9.52' }], survey: { status: 'Complete', data: { satisfaction: 5, feedback: 'The process was smooth and the advice was very helpful!' } }, activityLog: [{ date: '2025-09-20', activity: 'Participant survey completed.' }, { date: '2025-09-18', activity: 'On-site assessment completed by John Doe.' }, { date: '2025-04-22', activity: 'Landowner planted trees.' }, { date: '2025-04-10', activity: 'Project initiated.' }] },
-                 { id: 4, landowner: 'Grace Kelly', county: 'Clare', eircode: 'V95 GH78', phone: '353874567890', actionType: 'Wildlife Pond', status: 'Application Review', startDate: '2025-09-21', specialist: 'N/A', details: 'Proposal for a small pond near an existing stream.', assessments: [], survey: { status: 'Not Sent', data: null }, activityLog: [{ date: '2025-09-21', activity: 'Landowner submitted application.' }] }
+                // Keep original diverse-status projects for context - UPDATED with new action types
+                 { id: 1, landowner: 'David Miller', county: 'Kerry', eircode: 'V93 AB12', phone: '353871234567', actionType: 'Blocking Drains', status: 'Implementation', startDate: '2025-08-15', specialist: 'Peter Jones (Hydrologist)', details: 'Blocking drains in the lower meadow to enhance local biodiversity and re-wet the area.', assessments: [], survey: { status: 'Pending', data: null }, activityLog: [{ date: '2025-08-20', activity: 'Hydrologist assigned: Peter Jones' }, { date: '2025-08-15', activity: 'Application approved. Project initiated.' }] },
+                 { id: 2, landowner: 'Sarah Chen', county: 'Cork', eircode: 'T23 CD34', phone: '353872345678', actionType: 'Woodland', status: 'Data Collection', startDate: '2025-07-01', specialist: 'Maria Garcia (Ecologist)', details: 'A comprehensive ecological plan for a new 10-acre mixed woodland.', assessments: [{ assessor: 'Maria Garcia', date: '2025-09-10', notes: 'Site visit complete. Excellent potential for native species reintroduction. Soil samples taken.', photos: 2, location: '52.05, -9.51' }], survey: { status: 'Pending', data: null }, activityLog: [{ date: '2025-09-10', activity: 'On-site assessment completed by Maria Garcia.' }, { date: '2025-07-05', activity: 'Ecologist created 10-page plan and delivered to landowner.' }, { date: '2025-07-01', activity: 'Project initiated.' }] },
+                 { id: 3, landowner: 'Tom O\'Sullivan', county: 'Limerick', eircode: 'V94 EF56', phone: '353873456789', actionType: 'Hedgerow', status: 'Complete', startDate: '2025-04-10', specialist: 'HC Team', details: 'Planting of 300m of native Irish hedgerow.', assessments: [{ assessor: 'John Doe', date: '2025-09-18', notes: 'Post-action assessment shows 95% plant survival rate. Good growth observed.', photos: 5, location: '52.14, -9.52' }], survey: { status: 'Complete', data: { satisfaction: 5, feedback: 'The process was smooth and the advice was very helpful!' } }, activityLog: [{ date: '2025-09-20', activity: 'Participant survey completed.' }, { date: '2025-09-18', activity: 'On-site assessment completed by John Doe.' }, { date: '2025-04-22', activity: 'Landowner planted hedgerow.' }, { date: '2025-04-10', activity: 'Project initiated.' }] },
+                 { id: 4, landowner: 'Grace Kelly', county: 'Clare', eircode: 'V95 GH78', phone: '353874567890', actionType: 'Fencing', status: 'Application Review', startDate: '2025-09-21', specialist: 'N/A', details: 'Proposal for fencing off a small pond near an existing stream.', assessments: [], survey: { status: 'Not Sent', data: null }, activityLog: [{ date: '2025-09-21', activity: 'Landowner submitted application.' }] }
             ];
 
             const eircodePrefixes = {
@@ -372,8 +346,8 @@
                     actionType: action,
                     status: 'Implementation',
                     startDate: `2025-0${month}-${Math.floor(Math.random() * 28) + 1}`,
-                    specialist: action === 'Wildlife Pond' ? 'Peter Jones (Hydrologist)' : (action === 'Plan for Nature' ? 'Maria Garcia (Ecologist)' : 'HC Team'),
-                    details: `Project in implementation phase for a ${action.toLowerCase()}.`,
+                    specialist: action === 'Blocking Drains' ? 'Peter Jones (Hydrologist)' : (action === 'Woodland' ? 'Maria Garcia (Ecologist)' : 'HC Team'),
+                    details: `Project in implementation phase for ${action.toLowerCase()}.`,
                     assessments: [],
                     survey: { status: 'Not Sent', data: null },
                     activityLog: [
@@ -386,12 +360,14 @@
 
         let projects = generateProjects();
         
+        // Global object to hold chart instances
+        let chartInstances = {};
 
         // --- GLOBAL STATE ---
         const state = {
             currentView: 'overview', // 'overview', 'dashboard', 'projectDetail', 'team', 'surveys', 'mindmap'
+            dashboardView: 'list', // 'list' or 'analytics'
             currentProjectId: null,
-            currentTeamMemberId: null,
             filterText: '',
         };
 
@@ -403,6 +379,10 @@
         const dashboardLink = document.getElementById('dashboard-link');
         const addProjectBtn = document.getElementById('add-project-btn');
         const surveysLink = document.getElementById('surveys-link');
+        const implementationLink = document.getElementById('implementation-link');
+        const assessmentsLink = document.getElementById('assessments-link');
+        const communicationLink = document.getElementById('communication-link');
+        const teamLink = document.getElementById('team-link');
 
         // --- STATUS STYLES MAPPING ---
         const statusStyles = {
@@ -419,6 +399,12 @@
         };
 
         const iconMap = {
+            'Fencing': 'fas fa-grip-horizontal',
+            'Blocking Drains': 'fas fa-trowel',
+            'Woodland': 'fas fa-tree',
+            'Sphagnum Moss': 'fas fa-seedling',
+            'Hedgerow': 'fas fa-leaf',
+            // Old icons left for survey templates
             'Wildlife Pond': 'fas fa-water',
             'Plan for Nature': 'fas fa-feather-alt',
             'Mini Woodland': 'fas fa-tree',
@@ -431,7 +417,7 @@
          */
         function setActiveLink(activeLink) {
             // Remove active styles from all main links
-            [homeLink, dashboardLink, surveysLink].forEach(link => {
+            [homeLink, dashboardLink, surveysLink, implementationLink, assessmentsLink, communicationLink, teamLink].forEach(link => {
                 if (link) { // Check if link exists
                     link.classList.remove('bg-green-100', 'text-green-800', 'font-semibold');
                     link.classList.add('text-gray-600', 'hover:bg-gray-200');
@@ -457,7 +443,7 @@
 
             contentArea.innerHTML = `
                 <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8 max-w-4xl mx-auto">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Nature Project Management Platform</h2>
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">The Project Dulra Management Platform</h2>
                     <p class="text-lg text-gray-600 mb-8">A comprehensive solution designed to bring efficiency and scalability to your environmental projects. This platform is built on six core modules:</p>
 
                     <div class="space-y-8">
@@ -553,10 +539,69 @@
         function renderDashboard() {
             state.currentView = 'dashboard';
             state.currentProjectId = null;
-            state.currentTeamMemberId = null;
             pageTitle.textContent = 'Projects Dashboard';
-            addProjectBtn.classList.remove('hidden');
             setActiveLink(dashboardLink);
+
+            // Create tab structure
+            contentArea.innerHTML = `
+                <div class="mb-4 border-b border-gray-200">
+                    <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="dashboard-tabs">
+                        <li class="mr-2">
+                            <button class="dashboard-tab inline-block p-4 border-b-2 rounded-t-lg" data-view="list">
+                                <i class="fas fa-list mr-2"></i>Project List
+                            </button>
+                        </li>
+                        <li class="mr-2">
+                            <button class="dashboard-tab inline-block p-4 border-b-2 rounded-t-lg" data-view="analytics">
+                                <i class="fas fa-chart-line mr-2"></i>Analytics
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <div id="dashboard-content">
+                    <!-- Content will be injected here -->
+                </div>
+            `;
+
+            // Set active tab and render content
+            updateDashboardView(state.dashboardView);
+        }
+
+        /**
+         * Updates the dashboard to show the selected tab's content
+         */
+        function updateDashboardView(view) {
+            state.dashboardView = view;
+            
+            // Update tab styles
+            document.querySelectorAll('.dashboard-tab').forEach(tab => {
+                if (tab.dataset.view === view) {
+                    tab.classList.add('border-green-600', 'text-green-600');
+                    tab.classList.remove('border-transparent', 'hover:text-gray-600', 'hover:border-gray-300');
+                } else {
+                    tab.classList.remove('border-green-600', 'text-green-600');
+                    tab.classList.add('border-transparent', 'hover:text-gray-600', 'hover:border-gray-300');
+                }
+            });
+
+            // Render content based on view
+            if (view === 'list') {
+                searchInput.classList.remove('hidden');
+                addProjectBtn.classList.remove('hidden');
+                renderProjectList();
+            } else {
+                searchInput.classList.add('hidden');
+                addProjectBtn.classList.add('hidden');
+                renderAnalyticsDashboard();
+            }
+        }
+
+        /**
+         * Renders the project list view (formerly renderDashboard)
+         */
+        function renderProjectList() {
+            const dashboardContent = document.getElementById('dashboard-content');
+            if (!dashboardContent) return;
 
             const filteredProjects = projects.filter(p => 
                 p.landowner.toLowerCase().includes(state.filterText.toLowerCase()) ||
@@ -565,7 +610,7 @@
             );
 
             if (filteredProjects.length === 0) {
-                contentArea.innerHTML = `<div class="text-center py-16"><i class="fas fa-folder-open fa-3x text-gray-400 mb-4"></i><h2 class="text-xl font-semibold text-gray-600">No projects found.</h2><p class="text-gray-500">Try adjusting your search or add a new project.</p></div>`;
+                dashboardContent.innerHTML = `<div class="text-center py-16"><i class="fas fa-folder-open fa-3x text-gray-400 mb-4"></i><h2 class="text-xl font-semibold text-gray-600">No projects found.</h2><p class="text-gray-500">Try adjusting your search or add a new project.</p></div>`;
                 return;
             }
 
@@ -592,15 +637,7 @@
                 </div>
             `).join('');
 
-            contentArea.innerHTML = `
-                <div class="bg-white rounded-lg shadow-sm border border-gray-200">
-                    ${projectListHeader}
-                    <div class="max-h-[75vh] overflow-y-auto">
-                        ${projectListItems}
-                    </div>
-                </div>`;
-
-            contentArea.innerHTML = `
+            dashboardContent.innerHTML = `
                 <div class="flex justify-between items-center mb-4">
                     <p class="text-sm text-gray-500">Showing ${filteredProjects.length} projects.</p>
                     <button id="view-structure-btn" class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-full font-semibold hover:bg-gray-50 transition-all text-sm">
@@ -614,6 +651,173 @@
                     </div>
                 </div>`;
         }
+        
+        /**
+         * Renders the new Analytics Dashboard view
+         */
+        function renderAnalyticsDashboard() {
+            const dashboardContent = document.getElementById('dashboard-content');
+            if (!dashboardContent) return;
+
+            // Destroy old charts if they exist
+            Object.values(chartInstances).forEach(chart => chart.destroy());
+            chartInstances = {};
+
+            dashboardContent.innerHTML = `
+                <!-- KPI Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                    <div class="bg-white p-6 rounded-lg shadow-sm border">
+                        <h3 class="text-sm font-medium text-gray-500">Total Applications</h3>
+                        <p class="text-3xl font-bold text-gray-800 mt-2">1,072</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm border">
+                        <h3 class="text-sm font-medium text-gray-500">Eligible Applicants</h3>
+                        <p class="text-3xl font-bold text-gray-800 mt-2">1,041</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm border">
+                        <h3 class="text-sm font-medium text-gray-500">Total Actions Applied For</h3>
+                        <p class="text-3xl font-bold text-gray-800 mt-2">3,068</p>
+                    </div>
+                </div>
+
+                <!-- Charts Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-lg shadow-sm border">
+                        <h3 class="text-lg font-semibold mb-4">Applications by County</h3>
+                        <div class="h-80"><canvas id="applications-chart"></canvas></div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm border">
+                        <h3 class="text-lg font-semibold mb-4">Total Actions Applied For</h3>
+                        <div class="h-80 flex justify-center"><canvas id="actions-chart"></canvas></div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm border lg:col-span-2">
+                        <h3 class="text-lg font-semibold mb-4">Applicant Demographics (Eligible)</h3>
+                        <div class="h-80 flex justify-center"><canvas id="demographics-chart"></canvas></div>
+                    </div>
+                </div>
+            `;
+
+            // Create charts
+            createApplicationsChart();
+            createActionsChart();
+            createDemographicsChart();
+        }
+
+        /**
+         * Creates the Applications by County bar chart
+         */
+        function createApplicationsChart() {
+            const ctx = document.getElementById('applications-chart')?.getContext('2d');
+            if (!ctx) return;
+
+            const data = {
+                labels: ['Kerry', 'Cork', 'Mayo', 'Limerick', 'Donegal', 'Roscommon', 'Sligo'],
+                datasets: [
+                    {
+                        label: 'Applications',
+                        data: [153, 51, 303, 121, 199, 86, 159],
+                        backgroundColor: 'rgba(16, 163, 74, 0.6)', // green-600
+                        borderColor: 'rgba(16, 163, 74, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Eligible',
+                        data: [150, 50, 295, 113, 198, 81, 154],
+                        backgroundColor: 'rgba(147, 197, 253, 0.6)', // blue-300
+                        borderColor: 'rgba(147, 197, 253, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            };
+
+            chartInstances.applications = new Chart(ctx, {
+                type: 'bar',
+                data: data,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        /**
+         * Creates the Total Actions Applied For donut chart
+         */
+        function createActionsChart() {
+            const ctx = document.getElementById('actions-chart')?.getContext('2d');
+            if (!ctx) return;
+
+            const data = {
+                labels: ['Fencing', 'Blocking Drains', 'Woodland', 'Sphagnum Moss', 'Hedgerow'],
+                datasets: [{
+                    label: 'Total Actions',
+                    data: [727, 416, 536, 735, 654], // Manually summed from CSVs
+                    backgroundColor: [
+                        'rgba(52, 211, 153, 0.7)', // emerald-400
+                        'rgba(59, 130, 246, 0.7)', // blue-500
+                        'rgba(16, 163, 74, 0.7)',  // green-600
+                        'rgba(168, 85, 247, 0.7)', // purple-500
+                        'rgba(239, 68, 68, 0.7)'   // red-500
+                    ],
+                    hoverOffset: 4
+                }]
+            };
+
+            chartInstances.actions = new Chart(ctx, {
+                type: 'doughnut',
+                data: data,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                        }
+                    }
+                }
+            });
+        }
+
+        /**
+         * Creates the Applicant Demographics pie chart
+         */
+        function createDemographicsChart() {
+            const ctx = document.getElementById('demographics-chart')?.getContext('2d');
+            if (!ctx) return;
+
+            const data = {
+                labels: ['Dairy', 'Tilage', 'ACRES Co OP'],
+                datasets: [{
+                    label: 'Applicant Demographics',
+                    data: [738, 86, 216], // From 'Applicant demographics.csv' - 'All' column
+                    backgroundColor: [
+                        'rgba(251, 146, 60, 0.7)', // orange-400
+                        'rgba(132, 204, 22, 0.7)', // lime-500
+                        'rgba(34, 197, 94, 0.7)'  // green-500
+                    ],
+                    hoverOffset: 4
+                }]
+            };
+
+            chartInstances.demographics = new Chart(ctx, {
+                type: 'pie',
+                data: data,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                        }
+                    }
+                }
+            });
+        }
 
         /**
          * Renders the detailed view for a single project.
@@ -621,7 +825,6 @@
         function renderProjectDetail(projectId) {
             state.currentView = 'projectDetail';
             state.currentProjectId = projectId;
-            state.currentTeamMemberId = null;
             addProjectBtn.classList.add('hidden');
             // Note: No sidebar link is active when in a detail view
             setActiveLink(null);
@@ -652,7 +855,8 @@
             `;
 
              const renderActions = () => {
-                const reportAttachment = project.actionType === 'Wildlife Pond' ? `
+                // Updated to check for 'Blocking Drains' as the hydrologist-related action
+                const reportAttachment = project.actionType === 'Blocking Drains' ? `
                     <div class="bg-white p-6 rounded-lg shadow-sm border">
                         <h3 class="font-bold text-lg mb-4">Attached Documents</h3>
                         <a href="#" class="flex items-center p-3 bg-gray-50 rounded-md hover:bg-gray-100">
@@ -767,7 +971,6 @@
         function renderSurveysPage() {
             state.currentView = 'surveys';
             state.currentProjectId = null;
-            state.currentTeamMemberId = null;
             pageTitle.textContent = 'Survey Templates';
             addProjectBtn.classList.add('hidden'); // Or change to "+ Create Survey" button logic
             setActiveLink(surveysLink);
@@ -808,12 +1011,78 @@
         }
 
         /**
+         * Renders the team members list view.
+         */
+        function renderTeamMembers() {
+            state.currentView = 'team';
+            state.currentProjectId = null;
+            pageTitle.textContent = 'Team Dashboard';
+            addProjectBtn.classList.add('hidden');
+            setActiveLink(teamLink);
+
+            const teamCards = teamMembers.map(member => {
+                const assignmentItems = member.assignments.map(assign => {
+                    const project = projects.find(p => p.id === assign.projectId);
+                    if (!project) return ''; // Skip if project not found (data integrity)
+                    
+                    return `
+                        <div class_id="team-assignment-item" class="list-item-card grid grid-cols-10 gap-4 items-center px-4 py-3 border-b cursor-pointer" onclick="navigateToProject(${project.id})">
+                            <div class="col-span-3 font-semibold text-gray-800">${project.landowner}</div>
+                            <div class="col-span-2 text-sm text-gray-600">${project.county}</div>
+                            <div class="col-span-3 text-sm text-gray-600">${project.actionType}</div>
+                            <div class="col-span-2">
+                                <span class="text-xs font-semibold px-3 py-1 rounded-full ${assignmentStatusStyles[assign.status] || 'bg-gray-100 text-gray-800'}">${assign.status}</span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                const assignmentHeader = `
+                    <div class="px-4 py-2 bg-gray-50 grid grid-cols-10 gap-4 text-xs font-bold text-gray-500 uppercase rounded-t-lg mt-4">
+                        <div class="col-span-3">Assigned Landowner</div>
+                        <div class="col-span-2">County</div>
+                        <div class="col-span-3">Action Type</div>
+                        <div class="col-span-2">Assignment Status</div>
+                    </div>
+                `;
+
+                return `
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
+                        <!-- Team Member Header -->
+                        <div classs="team-member-header" class="p-4 border-b">
+                            <h3 class="text-xl font-semibold">${member.name}</h3>
+                            <div class="flex items-center text-sm text-gray-500 space-x-6 mt-1">
+                                <span><i class="fas fa-user-tie w-4 mr-2 text-gray-400"></i>${member.role}</span>
+                                <span><i class="fas fa-envelope w-4 mr-2 text-gray-400"></i>${member.email}</span>
+                                <span><i class="fas fa-phone w-4 mr-2 text-gray-400"></i>${member.phone}</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Assignments List -->
+                        <div class="assignments-list">
+                            ${member.assignments.length > 0 ? assignmentHeader : ''}
+                            <div class="max-h-60 overflow-y-auto">
+                                ${member.assignments.length > 0 ? assignmentItems : '<p class="text-sm text-gray-500 p-4 text-center">No projects currently assigned.</p>'}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            contentArea.innerHTML = `
+                <div class="max-w-6xl mx-auto">
+                    ${teamCards}
+                </div>
+            `;
+        }
+
+
+        /**
          * Renders the Mind Map/Project Structure page
          */
         function renderMindmapPage() {
             state.currentView = 'mindmap';
             state.currentProjectId = null;
-            state.currentTeamMemberId = null;
             pageTitle.textContent = 'Project Structure Overview';
             addProjectBtn.classList.add('hidden');
             setActiveLink(null); // No main link is active
@@ -1023,9 +1292,11 @@
                          <div class="mb-4">
                             <label for="actionType" class="block text-sm font-medium text-gray-700">Action Type</label>
                             <select id="actionType" required class="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500">
-                                <option>Wildlife Pond</option>
-                                <option>Plan for Nature</option>
-                                <option>Mini Woodland</option>
+                                <option>Fencing</option>
+                                <option>Blocking Drains</option>
+                                <option>Woodland</option>
+                                <option>Sphagnum Moss</option>
+                                <option>Hedgerow</option>
                             </select>
                         </div>
                         <div class="mb-6">
@@ -1272,25 +1543,40 @@
                 e.preventDefault();
                 renderDashboard();
             }
+
+            // Check for dashboard tab clicks
+            const tabBtn = e.target.closest('.dashboard-tab');
+            if (tabBtn) {
+                e.preventDefault();
+                updateDashboardView(tabBtn.dataset.view);
+            }
         });
 
 
         // Communication sidebar links
-        document.querySelectorAll('.comm-link').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const filterType = e.target.dataset.filter;
-                openCommunicationModal(filterType);
-            });
+        implementationLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            // Placeholder: Renders the main dashboard. This can be built out.
+            renderDashboard();
+            updateDashboardView('list');
+        });
+
+        assessmentsLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            // Placeholder: Renders the surveys page, as assessments are a type of survey.
+            renderSurveysPage();
+        });
+
+        communicationLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            // Defaults to 'county' filter, can be changed to a general comms page
+            openCommunicationModal('county');
         });
 
         // Team Members sidebar links
-        document.querySelectorAll('.team-link').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                // For now, both links go to the main team page. Filtering can be added later.
-                renderTeamMembers();
-            });
+        teamLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            renderTeamMembers();
         });
 
         // Sidebar collapsible sections - MODIFIED FOR EVENT DELEGATION
@@ -1329,6 +1615,9 @@
     </script>
 </body>
 </html>
+
+
+
 
 
 
