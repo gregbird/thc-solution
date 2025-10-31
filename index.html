@@ -1599,6 +1599,31 @@
             }
         });
 
+        // Event delegation for dynamically added elements
+        contentArea.addEventListener('click', (e) => {
+            // Check for "View Structure" button
+            const structureBtn = e.target.closest('#view-structure-btn');
+            if (structureBtn) {
+                e.preventDefault();
+                renderMindmapPage();
+            }
+
+            // Check for "Back to Dashboard" button
+            const backBtn = e.target.closest('#back-to-dashboard-btn');
+            if (backBtn) {
+                e.preventDefault();
+                renderDashboard();
+            }
+
+            // Check for dashboard tab clicks
+            const tabBtn = e.target.closest('.dashboard-tab');
+            if (tabBtn) {
+                e.preventDefault();
+                updateDashboardView(tabBtn.dataset.view);
+            }
+        });
+
+
         // Communication sidebar links
         implementationLink.addEventListener('click', (e) => {
             e.preventDefault();
@@ -1667,7 +1692,6 @@
     </script>
 </body>
 </html>
-
 
 
 
