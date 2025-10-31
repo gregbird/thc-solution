@@ -1574,7 +1574,8 @@
             document.getElementById('password').value = "";
         }
 
-        function handleSendMessage(e) {
+        // --- EVENT LISTENERS ---
+        homeLink.addEventListener('click', (e) => {
             e.preventDefault();
             renderOverviewPage();
         });
