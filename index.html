@@ -412,8 +412,9 @@
 
         // --- GLOBAL STATE ---
         const state = {
-            currentView: 'overview', // 'overview', 'dashboard', 'projectDetail', 'team', 'surveys', 'mindmap'
+            currentView: 'overview', // 'overview', 'dashboard', 'projectDetail', 'team', 'surveys'
             dashboardView: 'list', // 'list' or 'analytics'
+            overviewView: 'platform', // 'platform' or 'structure'
             currentProjectId: null,
             filterText: '',
         };
@@ -477,12 +478,67 @@
         function renderOverviewPage() {
             state.currentView = 'overview';
             state.currentProjectId = null;
-            state.currentTeamMemberId = null;
-            pageTitle.textContent = 'Platform Overview';
+            pageTitle.textContent = 'Home';
             addProjectBtn.classList.add('hidden');
             setActiveLink(homeLink);
 
             contentArea.innerHTML = `
+                <div class="mb-4 border-b border-gray-200">
+                    <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="overview-tabs">
+                        <li class="mr-2">
+                            <button class="overview-tab inline-block p-4 border-b-2 rounded-t-lg" data-view="platform">
+                                <i class="fas fa-rocket mr-2"></i>Platform Overview
+                            </button>
+                        </li>
+                        <li class="mr-2">
+                            <button class="overview-tab inline-block p-4 border-b-2 rounded-t-lg" data-view="structure">
+                                <i class="fas fa-sitemap mr-2"></i>Project Structure
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <div id="overview-content">
+                    <!-- Content will be injected here -->
+                </div>
+            `;
+            
+            // Set active tab and render content
+            updateOverviewView(state.overviewView);
+        }
+
+        /**
+         * Updates the overview page to show the selected tab's content
+         */
+        function updateOverviewView(view) {
+            state.overviewView = view;
+            
+            // Update tab styles
+            document.querySelectorAll('.overview-tab').forEach(tab => {
+                if (tab.dataset.view === view) {
+                    tab.classList.add('border-green-600', 'text-green-600');
+                    tab.classList.remove('border-transparent', 'hover:text-gray-600', 'hover:border-gray-300');
+                } else {
+                    tab.classList.remove('border-green-600', 'text-green-600');
+                    tab.classList.add('border-transparent', 'hover:text-gray-600', 'hover:border-gray-300');
+                }
+            });
+
+            // Render content based on view
+            if (view === 'platform') {
+                renderOverviewPlatformContent();
+            } else {
+                renderOverviewStructureContent();
+            }
+        }
+
+        /**
+         * Renders the platform overview content
+         */
+        function renderOverviewPlatformContent() {
+            const overviewContent = document.getElementById('overview-content');
+            if (!overviewContent) return;
+
+            overviewContent.innerHTML = `
                 <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8 max-w-4xl mx-auto">
                     <h2 class="text-3xl font-bold text-gray-800 mb-4">The Project Dulra Management Platform</h2>
                     <p class="text-lg text-gray-600 mb-8">A comprehensive solution designed to bring efficiency and scalability to your environmental projects. This platform is built on six core modules:</p>
@@ -569,6 +625,119 @@
                             </div>
                         </div>
 
+                    </div>
+                </div>
+            `;
+        }
+
+        /**
+         * Renders the project structure content
+         */
+        function renderOverviewStructureContent() {
+            const overviewContent = document.getElementById('overview-content');
+            if (!overviewContent) return;
+            
+            overviewContent.innerHTML = `
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8 max-w-4xl mx-auto">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">The Hare's Corner - Structure</h2>
+
+                    <div class="space-y-2">
+                        <!-- Action Implementation -->
+                        <div>
+                            <button class="collapsible-btn w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 rounded-lg text-left">
+                                <span class="font-semibold text-lg"><i class="fas fa-tasks w-8 text-center text-gray-500 mr-3"></i>Action Implementation</span>
+                                <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
+                            </button>
+                            <div class="collapsible-content hidden pl-16 py-2 space-y-1 text-gray-600">
+                                <p>Wildlife Pond</p>
+                                <p>Plan for Nature</p>
+                                <p>Mini Woodland</p>
+                                <p>Other</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Application Approval Process -->
+                        <div>
+                            <button class="collapsible-btn w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 rounded-lg text-left">
+                                <span class="font-semibold text-lg"><i class="fas fa-folder-plus w-8 text-center text-gray-500 mr-3"></i>Application Approval Process</span>
+                                <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
+                            </button>
+                            <div class="collapsible-content hidden pl-16 py-2 space-y-1 text-gray-600">
+                                <p>Online Application Form</p>
+                                <p>Internal Review & Scoring</p>
+                                <p>Approval/Rejection Comms</p>
+                            </div>
+                        </div>
+
+                        <!-- Participant Communication Strategy -->
+                        <div>
+                            <button class="collapsible-btn w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 rounded-lg text-left">
+                                <span class="font-semibold text-lg"><i class="fas fa-bullhorn w-8 text-center text-gray-500 mr-3"></i>Participant Communication Strategy</span>
+                                <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
+                            </button>
+                            <div class="collapsible-content hidden pl-16 py-2 space-y-1 text-gray-600">
+                                <p>Bulk Communication (Email, WhatsApp)</p>
+                                <p>Individual Communication (Project Milestones)</p>
+                                <p>Resource Hub (Guides, Webinars)</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Data Collection & Reporting -->
+                        <div>
+                            <button class="collapsible-btn w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 rounded-lg text-left">
+                                <span class="font-semibold text-lg"><i class="fas fa-database w-8 text-center text-gray-500 mr-3"></i>Data Collection & Reporting</span>
+                                <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
+                            </button>
+                            <div class="collapsible-content hidden pl-16 py-2 space-y-1 text-gray-600">
+                                <p>Participant Surveys (Google Forms)</p>
+                                <div>
+                                    <button class="collapsible-btn w-full flex justify-between items-center p-2 text-gray-600 text-left">
+                                        <span class="font-semibold">On-Site Assessments</span>
+                                        <i class="fas fa-chevron-down transform transition-transform duration-200 text-xs"></i>
+                                    </button>
+                                    <div class="collapsible-content hidden pl-8 py-2 space-y-1 text-sm">
+                                        <p>Pond Assessment Sheet</p>
+                                        <p>Woodland Assessment Sheet</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <button class="collapsible-btn w-full flex justify-between items-center p-2 text-gray-600 text-left">
+                                        <span class="font-semibold">Funder Reporting</span>
+                                        <i class="fas fa-chevron-down transform transition-transform duration-200 text-xs"></i>
+                                    </button>
+                                    <div class="collapsible-content hidden pl-8 py-2 space-y-1 text-sm">
+                                        <p>Private Funders (ESG, CSRD)</p>
+                                        <p>Public Funders (EU Targets)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Financials -->
+                        <div>
+                            <button class="collapsible-btn w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 rounded-lg text-left">
+                                <span class="font-semibold text-lg"><i class="fas fa-euro-sign w-8 text-center text-gray-500 mr-3"></i>Financials</span>
+                                <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
+                            </button>
+                            <div class="collapsible-content hidden pl-16 py-2 space-y-1 text-gray-600">
+                                <p>Grant Management</p>
+                                <p>Payment Processing</p>
+                            </div>
+                        </div>
+
+                        <!-- Team Members -->
+                        <div>
+                            <button class="collapsible-btn w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 rounded-lg text-left">
+                                <span class="font-semibold text-lg"><i class="fas fa-users w-8 text-center text-gray-500 mr-3"></i>Team Members</span>
+                                <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
+                            </button>
+                            <div class="collapsible-content hidden pl-16 py-2 space-y-1 text-gray-600">
+                                <p>Coordinators</p>
+                                <p>Ecologists</p>
+                                <p>Hydrologists</p>
+                                <p>Assessors</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             `;
@@ -681,9 +850,6 @@
             dashboardContent.innerHTML = `
                 <div class="flex justify-between items-center mb-4">
                     <p class="text-sm text-gray-500">Showing ${filteredProjects.length} projects.</p>
-                    <button id="view-structure-btn" class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-full font-semibold hover:bg-gray-50 transition-all text-sm">
-                        <i class="fas fa-sitemap mr-2"></i>View Project Structure
-                    </button>
                 </div>
                 <div class="bg-white rounded-lg shadow-sm border border-gray-200">
                     ${projectListHeader}
@@ -770,474 +936,13 @@
                     }
                 ]
             };
-
-            chartInstances.applications = new Chart(ctx, {
-                type: 'bar',
-                data: data,
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
         }
-
-        /**
-         * Creates the Total Actions Applied For donut chart
-         */
-        function createActionsChart() {
-            const ctx = document.getElementById('actions-chart')?.getContext('2d');
-            if (!ctx) return;
-
-            const data = {
-                labels: ['Fencing', 'Blocking Drains', 'Woodland', 'Sphagnum Moss', 'Hedgerow'],
-                datasets: [{
-                    label: 'Total Actions',
-                    data: [727, 416, 536, 735, 654], // Manually summed from CSVs
-                    backgroundColor: [
-                        'rgba(52, 211, 153, 0.7)', // emerald-400
-                        'rgba(59, 130, 246, 0.7)', // blue-500
-                        'rgba(16, 163, 74, 0.7)',  // green-600
-                        'rgba(168, 85, 247, 0.7)', // purple-500
-                        'rgba(239, 68, 68, 0.7)'   // red-500
-                    ],
-                    hoverOffset: 4
-                }]
-            };
-
-            chartInstances.actions = new Chart(ctx, {
-                type: 'doughnut',
-                data: data,
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'right',
-                        }
-                    }
-                }
-            });
-        }
-
-        /**
-         * Creates the Applicant Demographics pie chart
-         */
-        function createDemographicsChart() {
-            const ctx = document.getElementById('demographics-chart')?.getContext('2d');
-            if (!ctx) return;
-
-            const data = {
-                labels: ['Dairy', 'Tilage', 'ACRES Co OP'],
-                datasets: [{
-                    label: 'Applicant Demographics',
-                    data: [738, 86, 216], // From 'Applicant demographics.csv' - 'All' column
-                    backgroundColor: [
-                        'rgba(251, 146, 60, 0.7)', // orange-400
-                        'rgba(132, 204, 22, 0.7)', // lime-500
-                        'rgba(34, 197, 94, 0.7)'  // green-500
-                    ],
-                    hoverOffset: 4
-                }]
-            };
-
-            chartInstances.demographics = new Chart(ctx, {
-                type: 'pie',
-                data: data,
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'right',
-                        }
-                    }
-                }
-            });
-        }
-
-        /**
-         * Renders the detailed view for a single project.
-         */
-        function renderProjectDetail(projectId) {
-            state.currentView = 'projectDetail';
-            state.currentProjectId = projectId;
-            addProjectBtn.classList.add('hidden');
-            // Note: No sidebar link is active when in a detail view
-            setActiveLink(null);
-
-            const project = projects.find(p => p.id === projectId);
-            if (!project) {
-                renderDashboard(); // Fallback if project not found
-                return;
-            }
-
-            pageTitle.textContent = `Project: ${project.landowner}`;
-
-            // --- Render functions for sub-components ---
-
-            const renderOverview = () => `
-                <div class="bg-white p-6 rounded-lg shadow-sm border">
-                    <h3 class="font-bold text-lg mb-4">Project Overview</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
-                        <div><strong class="text-gray-500 block">Landowner:</strong> ${project.landowner}</div>
-                        <div><strong class="text-gray-500 block">County:</strong> ${project.county}</div>
-                        <div><strong class="text-gray-500 block">Eircode:</strong> ${project.eircode}</div>
-                        <div><strong class="text-gray-500 block">Action Type:</strong> ${project.actionType}</div>
-                        <div><strong class="text-gray-500 block">Start Date:</strong> ${project.startDate}</div>
-                        <div><strong class="text-gray-500 block">Assigned Specialist:</strong> ${project.specialist}</div>
-                        <div class="lg:col-span-3"><strong class="text-gray-500 block">Details:</strong> ${project.details}</div>
-                    </div>
-                </div>
-            `;
-
-             const renderActions = () => {
-                // Updated to check for 'Blocking Drains' as the hydrologist-related action
-                const reportAttachment = project.actionType === 'Blocking Drains' ? `
-                    <div class="bg-white p-6 rounded-lg shadow-sm border">
-                        <h3 class="font-bold text-lg mb-4">Attached Documents</h3>
-                        <a href="#" class="flex items-center p-3 bg-gray-50 rounded-md hover:bg-gray-100">
-                            <i class="fas fa-file-pdf text-red-500 text-xl mr-3"></i>
-                            <div>
-                                <p class="font-semibold">Hydrologist_Report.pdf</p>
-                                <p class="text-xs text-gray-500">1.2 MB - Uploaded 2025-08-20</p>
-                            </div>
-                        </a>
-                    </div>
-                ` : '';
-
-                return `
-                    <div class="space-y-6">
-                         <div class="bg-white p-6 rounded-lg shadow-sm border">
-                            <h3 class="font-bold text-lg mb-4">Communication</h3>
-                            <button onclick="window.open('https://wa.me/${project.phone}', '_blank')" class="w-full bg-green-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-green-600 transition-all flex items-center justify-center">
-                                <i class="fab fa-whatsapp text-xl mr-3"></i> Message Landowner via WhatsApp
-                            </button>
-                        </div>
-                        ${reportAttachment}
-                    </div>
-                   `;
-            };
-
-            const renderAssessments = () => {
-                const assessmentItems = project.assessments.length > 0 ? project.assessments.map(a => `
-                    <div class="border-b last:border-b-0 py-3">
-                        <div class="flex justify-between items-center">
-                            <p class="font-semibold">${a.assessor}</p>
-                            <p class="text-sm text-gray-500">${a.date}</p>
-                        </div>
-                        <p class="text-sm text-gray-600 mt-1">${a.notes}</p>
-                        <div class="text-xs text-gray-500 mt-2">
-                            <i class="fas fa-camera mr-1"></i> ${a.photos} photos | <i class="fas fa-map-marker-alt ml-3 mr-1"></i> ${a.location}
-                        </div>
-                    </div>`).join('') : '<p class="text-sm text-gray-500 py-4 text-center">No assessments recorded yet.</p>';
-                
-                return `
-                    <div class="bg-white p-6 rounded-lg shadow-sm border">
-                        <div class="flex justify-between items-center mb-4">
-                            <h3 class="font-bold text-lg">On-Site Assessments</h3>
-                            <button class="bg-blue-500 text-white px-3 py-1 text-sm rounded-md font-semibold hover:bg-blue-600" onclick="openAssessmentModal()">
-                                <i class="fas fa-plus mr-1"></i> Add Assessment
-                            </button>
-                        </div>
-                        <div class="max-h-60 overflow-y-auto pr-2">${assessmentItems}</div>
-                    </div>`;
-            };
-
-            const renderSurvey = () => {
-                let surveyContent = '';
-                if (project.survey.status === 'Complete') {
-                    surveyContent = `<div class="bg-green-50 p-4 rounded-md">
-                        <p class="font-semibold text-green-800">Survey Completed</p>
-                        <p class="text-sm mt-1"><strong>Satisfaction:</strong> ${'⭐'.repeat(project.survey.data.satisfaction)}</p>
-                        <p class="text-sm mt-1"><strong>Feedback:</strong> "${project.survey.data.feedback}"</p>
-                    </div>`;
-                } else if (project.survey.status === 'Pending') {
-                     surveyContent = `<div class="flex items-center justify-between">
-                        <p class="text-sm text-yellow-700">Survey sent to landowner. Awaiting response.</p>
-                        <button class="text-sm text-blue-600 hover:underline" onclick="openSurveyModal(true)">Simulate Completion</button>
-                     </div>`;
-                } else {
-                    surveyContent = `<div class="flex items-center justify-between">
-                        <p class="text-sm text-gray-600">Participant survey has not been sent yet.</p>
-                        <button class="bg-gray-200 text-gray-800 px-3 py-1 text-sm rounded-md font-semibold hover:bg-gray-300" onclick="sendSurvey(${project.id})">
-                            <i class="fas fa-paper-plane mr-2"></i>Send Survey
-                        </button>
-                    </div>`;
-                }
-                return `<div class="bg-white p-6 rounded-lg shadow-sm border">
-                    <h3 class="font-bold text-lg mb-4">Participant Survey</h3>
-                    ${surveyContent}
-                </div>`;
-            };
-
-            const renderActivityLog = () => {
-                const logItems = project.activityLog.map(log => `
-                    <div class="flex items-start py-2">
-                        <div class="w-2 h-2 bg-gray-300 rounded-full mt-1.5 mr-3"></div>
-                        <div>
-                            <p class="text-sm">${log.activity}</p>
-                            <p class="text-xs text-gray-400">${log.date}</p>
-                        </div>
-                    </div>`).join('');
-                return `
-                    <div class="bg-white p-6 rounded-lg shadow-sm border">
-                        <h3 class="font-bold text-lg mb-2">Activity Log</h3>
-                        <div class="max-h-96 overflow-y-auto pr-2">${logItems}</div>
-                    </div>`;
-            };
-
-            contentArea.innerHTML = `
-                <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
-                    <div class="xl:col-span-2 space-y-6">
-                        ${renderOverview()}
-                        ${renderAssessments()}
-                        ${renderSurvey()}
-                    </div>
-                    <div class="space-y-6">
-                        ${renderActions()}
-                        ${renderActivityLog()}
-                    </div>
-                </div>
-            `;
-        }
-
-        /**
-         * Renders the survey templates management page.
-         */
-        function renderSurveysPage() {
-            state.currentView = 'surveys';
-            state.currentProjectId = null;
-            pageTitle.textContent = 'Survey Templates';
-            addProjectBtn.classList.add('hidden'); // Or change to "+ Create Survey" button logic
-            setActiveLink(surveysLink);
-
-            const surveyCards = surveyTemplates.map(template => `
-                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 flex flex-col hover:shadow-lg transition-shadow">
-                    <div class="flex-grow">
-                        <div class="flex items-center text-green-600 mb-3">
-                            <i class="fas ${template.icon || 'fa-poll'} fa-lg mr-3"></i>
-                            <h3 class="font-bold text-lg text-gray-800">${template.name}</h3>
-                        </div>
-                        <p class="text-sm text-gray-600 mb-4">${template.description}</p>
-                    </div>
-                    <div class="flex justify-between items-center text-xs text-gray-500 pt-4 border-t">
-                        <span>${template.questionCount} Questions</span>
-                        <div>
-                            <a href="#" class="hover:text-green-600 mr-3"><i class="fas fa-edit mr-1"></i> Edit</a>
-                            <a href="#" class="hover:text-green-600"><i class="fas fa-copy mr-1"></i> Duplicate</a>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-
-            contentArea.innerHTML = `
-                <div class="flex justify-between items-center mb-6">
-                    <div>
-                        <h2 class="text-xl font-semibold">Manage Surveys</h2>
-                        <p class="text-gray-500">Create, edit, and manage all survey and assessment templates.</p>
-                    </div>
-                    <button class="bg-green-600 text-white px-4 py-2 rounded-full font-semibold hover:bg-green-700 transition-all shadow-md">
-                        <i class="fas fa-plus mr-2"></i>Create Survey
-                    </button>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                    ${surveyCards}
-                </div>
-            `;
-        }
-
-        /**
-         * Renders the team members list view.
-         */
-        function renderTeamMembers() {
-            state.currentView = 'team';
-            state.currentProjectId = null;
-            pageTitle.textContent = 'Team Dashboard';
-            addProjectBtn.classList.add('hidden');
-            setActiveLink(teamLink);
-
-            const teamCards = teamMembers.map(member => {
-                const assignmentItems = member.assignments.map(assign => {
-                    const project = projects.find(p => p.id === assign.projectId);
-                    if (!project) return ''; // Skip if project not found (data integrity)
-                    
-                    return `
-                        <div class_id="team-assignment-item" class="list-item-card grid grid-cols-10 gap-4 items-center px-4 py-3 border-b cursor-pointer" onclick="navigateToProject(${project.id})">
-                            <div class="col-span-3 font-semibold text-gray-800">${project.landowner}</div>
-                            <div class="col-span-2 text-sm text-gray-600">${project.county}</div>
-                            <div class="col-span-3 text-sm text-gray-600">${project.actionType}</div>
-                            <div class="col-span-2">
-                                <span class="text-xs font-semibold px-3 py-1 rounded-full ${assignmentStatusStyles[assign.status] || 'bg-gray-100 text-gray-800'}">${assign.status}</span>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-
-                const assignmentHeader = `
-                    <div class="px-4 py-2 bg-gray-50 grid grid-cols-10 gap-4 text-xs font-bold text-gray-500 uppercase rounded-t-lg mt-4">
-                        <div class="col-span-3">Assigned Landowner</div>
-                        <div class="col-span-2">County</div>
-                        <div class="col-span-3">Action Type</div>
-                        <div class="col-span-2">Assignment Status</div>
-                    </div>
-                `;
-
-                return `
-                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
-                        <!-- Team Member Header -->
-                        <div classs="team-member-header" class="p-4 border-b">
-                            <h3 class="text-xl font-semibold">${member.name}</h3>
-                            <div class="flex items-center text-sm text-gray-500 space-x-6 mt-1">
-                                <span><i class="fas fa-user-tie w-4 mr-2 text-gray-400"></i>${member.role}</span>
-                                <span><i class="fas fa-envelope w-4 mr-2 text-gray-400"></i>${member.email}</span>
-                                <span><i class="fas fa-phone w-4 mr-2 text-gray-400"></i>${member.phone}</span>
-                            </div>
-                        </div>
-                        
-                        <!-- Assignments List -->
-                        <div class="assignments-list">
-                            ${member.assignments.length > 0 ? assignmentHeader : ''}
-                            <div class="max-h-60 overflow-y-auto">
-                                ${member.assignments.length > 0 ? assignmentItems : '<p class="text-sm text-gray-500 p-4 text-center">No projects currently assigned.</p>'}
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-
-            contentArea.innerHTML = `
-                <div class="max-w-6xl mx-auto">
-                    ${teamCards}
-                </div>
-            `;
-        }
-
 
         /**
          * Renders the Mind Map/Project Structure page
          */
-        function renderMindmapPage() {
-            state.currentView = 'mindmap';
-            state.currentProjectId = null;
-            pageTitle.textContent = 'Project Structure Overview';
-            addProjectBtn.classList.add('hidden');
-            setActiveLink(null); // No main link is active
-
-            contentArea.innerHTML = `
-                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8 max-w-4xl mx-auto">
-                    <div class="flex justify-between items-center mb-6">
-                        <h2 class="text-2xl font-bold text-gray-800">Project - Structure</h2>
-                        <button id="back-to-dashboard-btn" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-full font-semibold hover:bg-gray-300 transition-all">
-                            <i class="fas fa-arrow-left mr-2"></i>Back to Dashboard
-                        </button>
-                    </div>
-
-                    <div class="space-y-2">
-                        <!-- Action Implementation -->
-                        <div>
-                            <button class="collapsible-btn w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 rounded-lg text-left">
-                                <span class="font-semibold text-lg"><i class="fas fa-tasks w-8 text-center text-gray-500 mr-3"></i>Action Implementation</span>
-                                <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
-                            </button>
-                            <div class="collapsible-content hidden pl-16 py-2 space-y-1 text-gray-600">
-                                <p>Fencing</p>
-                                <p>Blocking Drains</p>
-                                <p>Hedgerow</p>
-                                <p>Sphagnum Moss</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Application Approval Process -->
-                        <div>
-                            <button class="collapsible-btn w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 rounded-lg text-left">
-                                <span class="font-semibold text-lg"><i class="fas fa-folder-plus w-8 text-center text-gray-500 mr-3"></i>Application Approval Process</span>
-                                <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
-                            </button>
-                            <div class="collapsible-content hidden pl-16 py-2 space-y-1 text-gray-600">
-                                <p>Online Application Form</p>
-                                <p>Internal Review & Scoring</p>
-                                <p>Approval/Rejection Comms</p>
-                            </div>
-                        </div>
-
-                        <!-- Participant Communication Strategy -->
-                        <div>
-                            <button class="collapsible-btn w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 rounded-lg text-left">
-                                <span class="font-semibold text-lg"><i class="fas fa-bullhorn w-8 text-center text-gray-500 mr-3"></i>Participant Communication Strategy</span>
-                                <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
-                            </button>
-                            <div class="collapsible-content hidden pl-16 py-2 space-y-1 text-gray-600">
-                                <p>Bulk Communication (Email, WhatsApp)</p>
-                                <p>Individual Communication (Project Milestones)</p>
-                                <p>Resource Hub (Guides, Webinars)</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Data Collection & Reporting -->
-                        <div>
-                            <button class="collapsible-btn w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 rounded-lg text-left">
-                                <span class="font-semibold text-lg"><i class="fas fa-database w-8 text-center text-gray-500 mr-3"></i>Data Collection & Reporting</span>
-                                <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
-                            </button>
-                            <div class="collapsible-content hidden pl-16 py-2 space-y-1 text-gray-600">
-                                <p>Participant Surveys (Google Forms)</p>
-                                <div>
-                                    <button class="collapsible-btn w-full flex justify-between items-center p-2 text-gray-600 text-left">
-                                        <span class="font-semibold">On-Site Assessments</span>
-                                        <i class="fas fa-chevron-down transform transition-transform duration-200 text-xs"></i>
-                                    </button>
-                                    <div class="collapsible-content hidden pl-8 py-2 space-y-1 text-sm">
-                                        <p>Pond Assessment Sheet</p>
-                                        <p>Woodland Assessment Sheet</p>
-                                    </div>
-                                </div>
-                                <div>
-                                    <button class="collapsible-btn w-full flex justify-between items-center p-2 text-gray-600 text-left">
-                                        <span class="font-semibold">Funder Reporting</span>
-                                        <i class="fas fa-chevron-down transform transition-transform duration-200 text-xs"></i>
-                                    </button>
-                                    <div class="collapsible-content hidden pl-8 py-2 space-y-1 text-sm">
-                                        <p>Private Funders (ESG, CSRD)</p>
-                                        <p>Public Funders (EU Targets)</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Financials -->
-                        <div>
-                            <button class="collapsible-btn w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 rounded-lg text-left">
-                                <span class="font-semibold text-lg"><i class="fas fa-euro-sign w-8 text-center text-gray-500 mr-3"></i>Financials</span>
-                                <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
-                            </button>
-                            <div class="collapsible-content hidden pl-16 py-2 space-y-1 text-gray-600">
-                                <p>Grant Management</p>
-                                <p>Payment Processing</p>
-                            </div>
-                        </div>
-
-                        <!-- Team Members -->
-                        <div>
-                            <button class="collapsible-btn w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 rounded-lg text-left">
-                                <span class="font-semibold text-lg"><i class="fas fa-users w-8 text-center text-gray-500 mr-3"></i>Team Members</span>
-                                <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
-                            </button>
-                            <div class="collapsible-content hidden pl-16 py-2 space-y-1 text-gray-600">
-                                <p>Coordinators</p>
-                                <p>Ecologists</p>
-                                <p>Hydrologists</p>
-                                <p>Assessors</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
+        // THIS FUNCTION IS NO LONGER NEEDED AND IS REMOVED
+        // function renderMindmapPage() { ... }
 
         // --- MODAL FUNCTIONS ---
 
@@ -1590,25 +1295,22 @@
 
             // Event delegation for dynamically added elements
             contentArea.addEventListener('click', (e) => {
-                // Check for "View Structure" button
-                const structureBtn = e.target.closest('#view-structure-btn');
-                if (structureBtn) {
-                    e.preventDefault();
-                    renderMindmapPage();
-                }
-
-                // Check for "Back to Dashboard" button
-                const backBtn = e.target.closest('#back-to-dashboard-btn');
-                if (backBtn) {
-                    e.preventDefault();
-                    renderDashboard();
-                }
+                // Check for "View Structure" button - REMOVED
+                
+                // Check for "Back to Dashboard" button - REMOVED
 
                 // Check for dashboard tab clicks
                 const tabBtn = e.target.closest('.dashboard-tab');
                 if (tabBtn) {
                     e.preventDefault();
                     updateDashboardView(tabBtn.dataset.view);
+                }
+
+                // Check for overview tab clicks
+                const overviewTabBtn = e.target.closest('.overview-tab');
+                if (overviewTabBtn) {
+                    e.preventDefault();
+                    updateOverviewView(overviewTabBtn.dataset.view);
                 }
             });
 
