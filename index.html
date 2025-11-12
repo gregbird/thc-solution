@@ -744,7 +744,7 @@
                         <div class="h-80 flex justify-center"><canvas id="actions-chart"></canvas></div>
                     </div>
                     <div class="bg-white p-6 rounded-lg shadow-sm border lg:col-span-2">
-                        <h3 class="text-lg font-semibold mb-4">Applicant Demographics (Eligible)</h3>
+                        <h3 class="text-lg font-semibold mb-4">Measured Impacts</h3>
                         <div class="h-80 flex justify-center"><canvas id="demographics-chart"></canvas></div>
                     </div>
                 </div>
@@ -806,7 +806,7 @@
             if (!ctx) return;
 
             const data = {
-                labels: ['Fencing', 'Blocking Drains', 'Woodland', 'Sphagnum Moss', 'Hedgerow'],
+                labels: ['Planting Trees', 'Wild Bird Cover', 'Pasture Pumps', 'Swift Boxes', 'Hedgerow'],
                 datasets: [{
                     label: 'Total Actions',
                     data: [727, 416, 536, 735, 654], // Manually summed from CSVs
@@ -844,7 +844,7 @@
             if (!ctx) return;
 
             const data = {
-                labels: ['Dairy', 'Tilage', 'ACRES Co OP'],
+                labels: ['Climate', 'People', 'Nature'],
                 datasets: [{
                     label: 'Applicant Demographics',
                     data: [738, 86, 216], // From 'Applicant demographics.csv' - 'All' column
